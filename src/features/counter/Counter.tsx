@@ -5,14 +5,22 @@ import {
   decrement,
   increment,
   incrementByAmount,
-  incrementAsync,
+  fetchPopularMovies,
   incrementIfOdd,
   selectCount,
+  selectStatus,
+  selectMovieList,
+  selectMovieListStatus,
 } from "./counterSlice";
 import styles from "./Counter.module.css";
+import { LoadingButton } from "@mui/lab";
+import { Movie } from "@mui/icons-material";
 
 export const Counter = () => {
   const count = useAppSelector(selectCount);
+  const status = useAppSelector(selectStatus);
+  const movieList = useAppSelector(selectMovieList);
+  const movieListStatus = useAppSelector(selectMovieListStatus);
   const dispatch = useAppDispatch();
   const [incrementAmount, setIncrementAmount] = useState("2");
 
@@ -28,7 +36,7 @@ export const Counter = () => {
         >
           -
         </button>
-        <span className={styles.value}>{count}</span>
+        <span className={styles.value}>Count: {count}</span>
         <button
           className={styles.button}
           aria-label="Increment value"
@@ -50,12 +58,17 @@ export const Counter = () => {
         >
           Add Amount
         </button>
-        <button
-          className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
+
+        <LoadingButton
+          loading={movieListStatus === "loading"}
+          loadingPosition="start"
+          startIcon={<Movie />}
+          onClick={() => dispatch(fetchPopularMovies())}
+          variant="outlined"
         >
-          Add Async
-        </button>
+          Fetch Movies
+        </LoadingButton>
+
         <button
           className={styles.button}
           onClick={() => dispatch(incrementIfOdd(incrementValue))}
@@ -63,6 +76,8 @@ export const Counter = () => {
           Add If Odd
         </button>
       </div>
+      <div className={styles.row}>Status: {status}</div>
+      <>Movie: {movieList}</>
     </div>
   );
 };

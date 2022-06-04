@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> renders correctly 1`] = `
+<div
+  className="App"
+>
+  <header
+    className="App-header"
+  >
+    <img
+      alt="logo"
+      className="App-logo"
+      src="logo.svg"
+    />
+    <div>
+      <div
+        className="row"
+      >
+        <button
+          aria-label="Decrement value"
+          className="button"
+          onClick={[Function]}
+        >
+          -
+        </button>
+        <span
+          className="value"
+        >
+          Count: 
+          0
+        </span>
+        <button
+          aria-label="Increment value"
+          className="button"
+          onClick={[Function]}
+        >
+          +
+        </button>
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          aria-label="Set increment amount"
+          className="textbox"
+          onChange={[Function]}
+          value="2"
+        />
+        <button
+          className="button"
+          onClick={[Function]}
+        >
+          Add Amount
+        </button>
+        <button
+          className="MuiLoadingButton-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root css-1pkfx9i-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+          disabled={false}
+          id=":r0:"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+          >
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="MovieIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="m18 4 2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"
+              />
+            </svg>
+          </span>
+          Fetch Movies
+        </button>
+        <button
+          className="button"
+          onClick={[Function]}
+        >
+          Add If Odd
+        </button>
+      </div>
+      <div
+        className="row"
+      >
+        Status: 
+        idle
+      </div>
+      Movie: 
+    </div>
+  </header>
+</div>
+`;
