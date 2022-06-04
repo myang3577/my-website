@@ -1,6 +1,7 @@
+import "./Refresh.scss";
+
 import { motion } from "framer-motion";
 import { useState } from "react";
-import "./Refresh.scss";
 
 const button = {
   rest: { scale: 1 },

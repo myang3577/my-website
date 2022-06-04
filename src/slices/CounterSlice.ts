@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { RootState } from "../store";
 
 const TMDB_API_KEY: string = "dc44295f48afc4bcfb2bbfedac9bdc10";

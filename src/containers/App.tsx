@@ -1,7 +1,8 @@
-import logo from "./logo.svg";
-import { Counter } from "./containers/Counter";
 import "./App.css";
-import { Refresh } from "./components/Refresh";
+
+import { Refresh } from "../components/Refresh";
+import { Counter } from "../containers/Counter";
+import logo from "../logo.svg";
 
 const App = () => {
   return (

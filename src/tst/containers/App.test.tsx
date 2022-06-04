@@ -1,7 +1,8 @@
 import { Provider } from "react-redux";
-import { store } from "../store";
-import App from "../App";
 import renderer from "react-test-renderer";
+
+import App from "../../containers/App";
+import { store } from "../../store";
 
 describe("<App />", () => {
   it("renders correctly", () => {

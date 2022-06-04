@@ -1,18 +1,20 @@
 import { useState } from "react";
+
+import { Movie } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+
 import {
   decrement,
+  fetchPopularMovies,
   increment,
   incrementByAmount,
-  fetchPopularMovies,
   selectCount,
-  selectStatus,
   selectMovieList,
   selectMovieListStatus,
+  selectStatus
 } from "../slices/CounterSlice";
-import styles from "./Counter.module.css";
-import { LoadingButton } from "@mui/lab";
-import { Movie } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../store";
+import styles from "./Counter.module.css";
 
 export const Counter = () => {
   const count = useAppSelector(selectCount);

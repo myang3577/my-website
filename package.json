@@ -33,6 +33,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "testc": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -60,5 +61,17 @@
     "jest": "^28.1.0",
     "react-test-renderer": "^18.1.0",
     "sass": "^1.52.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/{index.tsx,*.d.ts}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 90,
+        "statements": 90
+      }
+    }
   }
 }

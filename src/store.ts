@@ -1,5 +1,7 @@
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+
+import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+
 import counterReducer from "./slices/CounterSlice";
 
 // Use throughout app instead of plain `useDispatch` and `useSelector`
