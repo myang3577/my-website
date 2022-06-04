@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
-import { Counter } from "./features/counter/Counter";
+import { Counter } from "./containers/Counter";
 import "./App.css";
+import { Refresh } from "./components/Refresh";
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
+        <Refresh />
       </header>
     </div>
   );

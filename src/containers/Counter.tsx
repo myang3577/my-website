@@ -1,20 +1,18 @@
 import { useState } from "react";
-
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import {
   decrement,
   increment,
   incrementByAmount,
   fetchPopularMovies,
-  incrementIfOdd,
   selectCount,
   selectStatus,
   selectMovieList,
   selectMovieListStatus,
-} from "./counterSlice";
+} from "../slices/CounterSlice";
 import styles from "./Counter.module.css";
 import { LoadingButton } from "@mui/lab";
 import { Movie } from "@mui/icons-material";
+import { useAppDispatch, useAppSelector } from "../store";
 
 export const Counter = () => {
   const count = useAppSelector(selectCount);
@@ -27,7 +25,7 @@ export const Counter = () => {
   const incrementValue = Number(incrementAmount) || 0;
 
   return (
-    <div>
+    <>
       <div className={styles.row}>
         <button
           className={styles.button}
@@ -68,16 +66,9 @@ export const Counter = () => {
         >
           Fetch Movies
         </LoadingButton>
-
-        <button
-          className={styles.button}
-          onClick={() => dispatch(incrementIfOdd(incrementValue))}
-        >
-          Add If Odd
-        </button>
       </div>
       <div className={styles.row}>Status: {status}</div>
       <>Movie: {movieList}</>
-    </div>
+    </>
   );
 };

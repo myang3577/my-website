@@ -1,9 +1,9 @@
 import counterReducer, {
   CounterState,
-  increment,
   decrement,
+  increment,
   incrementByAmount,
-} from "../features/counter/counterSlice";
+} from "../slices/CounterSlice";
 
 describe("counter reducer", () => {
   const initialState: CounterState = {
