@@ -23,7 +23,7 @@ export const BlobSvg = () => {
       fill: `${fillColor}ff`,
       strokeWidth: 0,
       transition: {
-        pathLength: { delay: 1, type: "spring", duration: 100, bounce: 0 },
+        pathLength: { delay: 1, type: "spring", duration: 10, bounce: 0 },
         opacity: { delay: 1, duration: 0.01 },
         fill: { delay: 0.5, duration: 2, ease: [1, 0, 0.8, 1] },
         strokeWidth: { delay: 2.5, duration: 0.01 },
@@ -39,11 +39,11 @@ export const BlobSvg = () => {
         initial="hidden"
         animate="visible"
         viewBox="0 0 299.86 299.86"
-        // viewBox="0 0 142.88 142.88"
       >
         <motion.g transform="translate(182.32 -18.09)">
-          {AllBlobSvgValues.map((blobSvgValues) => (
+          {AllBlobSvgValues.map((blobSvgValues, i) => (
             <BlobPart
+              key={i}
               variants={draw}
               blobSvgValues={blobSvgValues}
               strokeWidth={strokeWidth}

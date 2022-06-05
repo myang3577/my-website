@@ -1,4 +1,4 @@
-![](https://github.com/myang3577/my-website/actions/workflows/react-app-ci-cd.yml/badge.svg) [![codecov](https://codecov.io/gh/myang3577/my-website/branch/main/graph/badge.svg?token=DXEOA6PGEU)](https://codecov.io/gh/myang3577/my-website)
+![](https://github.com/myang3577/my-website/actions/workflows/react-app-ci-cd.yml/badge.svg?branch=main&kill_cache=1) [![codecov](https://codecov.io/gh/myang3577/my-website/branch/main/graph/badge.svg?token=DXEOA6PGEU)](https://codecov.io/gh/myang3577/my-website)
 
 https://myang3577.github.io/my-website
 
