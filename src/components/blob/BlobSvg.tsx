@@ -38,9 +38,10 @@ export const BlobSvg = () => {
         className="blob"
         initial="hidden"
         animate="visible"
-        viewBox="0 0 142.88 142.88"
+        viewBox="0 0 299.86 299.86"
+        // viewBox="0 0 142.88 142.88"
       >
-        <motion.g transform="translate(205.04 41.94)">
+        <motion.g transform="translate(182.32 -18.09)">
           {AllBlobSvgValues.map((blobSvgValues) => (
             <BlobPart
               variants={draw}
