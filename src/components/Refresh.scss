@@ -51,15 +51,6 @@ body {
   stroke-linejoin: round;
   stroke-linecap: round;
   margin-bottom: 100px;
-  border: 1px solid black;
-}
-
-.test {
-  height: 100%;
-  width: 100%;
-  overflow: visible;
-  stroke: rgb(21, 255, 0);
-  stroke-width: 2;
-  stroke-linejoin: round;
-  stroke-linecap: round;
+  background: #fccf8e;
+  border-radius: 50%;
 }
