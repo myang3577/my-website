@@ -1,11 +1,11 @@
-import renderer from "react-test-renderer";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import { Refresh } from "../../components/Refresh";
 
 describe("<Refresh />", () => {
-  it("renders correctly", () => {
-    const tree = renderer.create(<Refresh />).toJSON();
+  it("increases scale on click", () => {
+    const { container } = render(<Refresh />);
 
-    expect(tree).toMatchSnapshot();
+    fireEvent.click(container);
   });
 });
