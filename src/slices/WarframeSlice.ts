@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
 
-const MANIFEST_URL = "http://content.warframe.com/PublicExport/Manifest/";
+const MANIFEST_URL = "https://content.warframe.com/PublicExport/Manifest/";
 
 // const EXPORT_CUSTOMS = "ExportCustoms_en";
 // const EXPORT_DRONES = "ExportDrones_en";
