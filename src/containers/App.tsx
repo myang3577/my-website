@@ -1,14 +1,16 @@
-import { domMax, LazyMotion } from "framer-motion";
+import Button from "@mui/joy/Button";
+import { Link } from "react-router-dom";
 
 import { BlobSvg } from "../components/blob/BlobSvg";
 
 function App() {
   return (
-    <LazyMotion features={domMax}>
-      <div className="App">
-        <BlobSvg />
-      </div>
-    </LazyMotion>
+    <div className="App">
+      <BlobSvg />
+      <Link to={"warframe"}>
+        <Button>Warframe</Button>
+      </Link>
+    </div>
   );
 }
 
