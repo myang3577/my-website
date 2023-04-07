@@ -15,11 +15,11 @@ const root = createRoot(container);
 
 const router = createBrowserRouter([
   {
-    path: "/my-website-vite",
+    path: "/my-website",
     element: <App />,
   },
   {
-    path: "/my-website-vite/warframe",
+    path: "/my-website/warframe",
     element: <Warframe />,
   },
 ]);
