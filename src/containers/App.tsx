@@ -1,11 +1,12 @@
-import Button from "@mui/joy/Button";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { BlobSvg } from "../components/blob/BlobSvg";
+import appStyles from "./App.module.scss";
 
 function App() {
   return (
-    <div className="App">
+    <div className={appStyles.app}>
       <BlobSvg />
       <Link to={"warframe"}>
         <Button>Warframe</Button>
