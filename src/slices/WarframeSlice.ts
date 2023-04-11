@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { LOADING_STATE } from "../constants/Constants";
 import { RootState } from "../store";
 
 const MANIFEST_URL = "https://content.warframe.com/PublicExport/Manifest/";
@@ -21,6 +22,20 @@ const MANIFEST_URL = "https://content.warframe.com/PublicExport/Manifest/";
 // const EXPORT_WEAPONS = "ExportWeapons_en";
 // const EXPORT_MANIFEST = "ExportManifest";
 
+export type WarframeExports = { [key: string]: [] };
+
+export interface WarframeState {
+  value: number;
+  warframeExportStatus: LOADING_STATE;
+  warframeExports: WarframeExports;
+}
+
+const initialState: WarframeState = {
+  value: 0,
+  warframeExportStatus: LOADING_STATE.IDLE,
+  warframeExports: {},
+};
+
 const EXPORT_NAMES = [
   "ExportCustoms_en.json!00_eMmfFW0cBmhMgKCVg4OrVQ",
   "ExportDrones_en.json!00_LZKVJWzyNlEXy-hI3mpGnA",
@@ -40,24 +55,9 @@ const EXPORT_NAMES = [
   "ExportManifest.json!00_M1J0bDB945QmWfunK2Hiqw",
 ];
 
-export type WarframeExports = { [key: string]: [] };
-
-export interface WarframeState {
-  value: number;
-  warframeExportStatus: "idle" | "loading" | "failed";
-  warframeExports: WarframeExports;
-}
-
-export interface PopularMoviesResult {
-  title: string;
-}
-
-const initialState: WarframeState = {
-  value: 0,
-  warframeExportStatus: "idle",
-  warframeExports: {},
-};
-
+/**
+ * Fetch all the export files from the Warframe API and save them to redux state.
+ */
 export const fetchExports = createAsyncThunk("counter/fetchExports", async () => {
   const fetchExportJson = async (exportName: string): Promise<[]> => {
     const response = await fetch(`${MANIFEST_URL}${exportName}`);
@@ -106,22 +106,21 @@ export const warframeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchExports.pending, (state) => {
-        state.warframeExportStatus = "loading";
+        state.warframeExportStatus = LOADING_STATE.LOADING;
       })
       .addCase(fetchExports.fulfilled, (state, action) => {
-        state.warframeExportStatus = "idle";
+        state.warframeExportStatus = LOADING_STATE.IDLE;
         state.warframeExports = action.payload;
       })
       .addCase(fetchExports.rejected, (state) => {
-        state.warframeExportStatus = "failed";
+        state.warframeExportStatus = LOADING_STATE.FAILED;
       });
   },
 });
 
 export const { increment, decrement, incrementByAmount } = warframeSlice.actions;
 
-export const selectCount = (state: RootState) => state.warframe.value;
-export const selectStatus = (state: RootState) => state.warframe.warframeExportStatus;
+export const selectWarframeExportStatus = (state: RootState) => state.warframe.warframeExportStatus;
 export const selectWarframeExports = (state: RootState) => state.warframe.warframeExports;
 
 export default warframeSlice.reducer;
