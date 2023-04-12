@@ -1,17 +1,16 @@
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { BlobSvg } from "../components/blob/BlobSvg";
-import appStyles from "./App.module.scss";
 
 function App() {
   return (
-    <div className={appStyles.app}>
+    <Paper>
       <BlobSvg />
       <Link to={"warframe"}>
         <Button>Warframe</Button>
       </Link>
-    </div>
+    </Paper>
   );
 }
 

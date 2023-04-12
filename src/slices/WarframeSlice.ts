@@ -5,22 +5,22 @@ import { RootState } from "../store";
 
 const MANIFEST_URL = "https://content.warframe.com/PublicExport/Manifest/";
 
-// const EXPORT_CUSTOMS = "ExportCustoms_en";
-// const EXPORT_DRONES = "ExportDrones_en";
-// const EXPORT_FLAVOUR = "ExportFlavour_en";
-// const EXPORT_FUSIONBUNDLES = "ExportFusionBundles_en";
-// const EXPORT_GEAR = "ExportGear_en";
-// const EXPORT_KEYS = "ExportKeys_en";
-// const EXPORT_RECIPES = "ExportRecipes_en";
-// const EXPORT_REGIONS = "ExportRegions_en";
-// const EXPORT_RELICARCANE = "ExportRelicArcane_en";
-// const EXPORT_RESOURCES = "ExportResources_en";
-// const EXPORT_SENTINELS = "ExportSentinels_en";
-// const EXPORT_SORTIEREWARDS = "ExportSortieRewards_en";
-// const EXPORT_UPGRADES = "ExportUpgrades_en";
-// const EXPORT_WARFRAMES = "ExportWarframes_en";
-// const EXPORT_WEAPONS = "ExportWeapons_en";
-// const EXPORT_MANIFEST = "ExportManifest";
+// export const EXPORT_CUSTOMS_EN = "ExportCustoms_en";
+// export const EXPORT_DRONES_EN = "ExportDrones_en";
+// export const EXPORT_FLAVOUR_EN = "ExportFlavour_en";
+// export const EXPORT_FUSIONBUNDLES_EN = "ExportFusionBundles_en";
+// export const EXPORT_GEAR_EN = "ExportGear_en";
+// export const EXPORT_KEYS_EN = "ExportKeys_en";
+// export const EXPORT_RECIPES_EN = "ExportRecipes_en";
+// export const EXPORT_REGIONS_EN = "ExportRegions_en";
+// export const EXPORT_RELICARCANE_EN = "ExportRelicArcane_en";
+// export const EXPORT_RESOURCES_EN = "ExportResources_en";
+// export const EXPORT_SENTINELS_EN = "ExportSentinels_en";
+// export const EXPORT_SORTIEREWARDS_EN = "ExportSortieRewards_en";
+// export const EXPORT_UPGRADES_EN = "ExportUpgrades_en";
+// export const EXPORT_WARFRAMES_EN = "ExportWarframes_en";
+export const EXPORT_WEAPONS_EN = "ExportWeapons_en";
+// export const EXPORT_MANIFEST = "ExportManifest";
 
 export type WarframeExports = { [key: string]: [] };
 

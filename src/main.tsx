@@ -1,5 +1,6 @@
 import "./index.css";
 
+import { Paper } from "@mui/material";
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material/styles";
 import { domMax, LazyMotion } from "framer-motion";
 import React from "react";
@@ -38,9 +39,12 @@ const themeOptions: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: "IBM Plex Sans",
+    fontFamily: "Noto Sans",
     button: {
       textTransform: "none",
+      fontWeight: 700,
+    },
+    h4: {
       fontWeight: 700,
     },
   },
@@ -48,6 +52,7 @@ const themeOptions: ThemeOptions = {
 
 const theme = createTheme(themeOptions);
 
+// https://mui.com/material-ui/customization/default-theme/
 // const defaultUnusedTheme = createTheme({
 //   breakpoints: {
 //     keys: ["xs", "sm", "md", "lg", "xl"],
