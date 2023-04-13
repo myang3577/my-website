@@ -1,6 +1,7 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
+import pathOfExileReducer from "./slices/PathOfExileSlice";
 import warframeReducer from "./slices/WarframeSlice";
 
 // Use throughout app instead of plain `useDispatch` and `useSelector`
@@ -10,6 +11,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const store = configureStore({
   reducer: {
     warframe: warframeReducer,
+    pathOfExile: pathOfExileReducer,
   },
 });
 

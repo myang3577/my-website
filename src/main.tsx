@@ -1,6 +1,5 @@
 import "./index.css";
 
-import { Paper } from "@mui/material";
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material/styles";
 import { domMax, LazyMotion } from "framer-motion";
 import React from "react";
@@ -9,6 +8,7 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./containers/App";
+import PathOfExile from "./containers/pathofexile/PathOfEXile";
 import Warframe from "./containers/warframe/Warframe";
 import { store } from "./store";
 
@@ -23,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/my-website/warframe",
     element: <Warframe />,
+  },
+  {
+    path: "/my-website/pathofexile",
+    element: <PathOfExile />,
   },
 ]);
 
