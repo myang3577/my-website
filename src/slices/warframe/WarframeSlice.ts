@@ -58,7 +58,7 @@ const EXPORT_NAMES = [
 /**
  * Fetch all the export files from the Warframe API and save them to redux state.
  */
-export const fetchExports = createAsyncThunk("counter/fetchExports", async () => {
+export const fetchExports = createAsyncThunk("warframe/fetchExports", async () => {
   const fetchExportJson = async (exportName: string): Promise<[]> => {
     const response = await fetch(`${MANIFEST_URL}${exportName}`);
     const responseText = await response.text();

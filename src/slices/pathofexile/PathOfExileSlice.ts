@@ -4,36 +4,19 @@ import { LOADING_STATE } from "../../constants/Constants";
 import { RootState } from "../../store";
 import { fetchCorsProxy } from "../../utils/Utils";
 import { CURRENCY_URL } from "./PathOfExileConstants";
+import { fetchPathOfExileTrade } from "./PathOfExileHelpers";
 import { PathOfExileState } from "./PathOfExileTypes";
+import { TradeFetchResult } from "./types/TradeFetchResult";
 
 const initialState: PathOfExileState = {
   value: 0,
   currencyStatus: LOADING_STATE.IDLE,
   currency: {
-    currencyTypeName: "",
-    pay: {
-      id: 0,
-      league_id: 0,
-      pay_currency_id: 0,
-      get_currency_id: 0,
-      sample_time_utc: "",
-      count: 0,
-      value: 0,
-      data_point_count: 0,
-      includes_secondary: false,
-      listing_count: 0,
-    },
-    receive: {
-      id: 0,
-      league_id: 0,
-      pay_currency_id: 0,
-      get_currency_id: 0,
-      sample_time_utc: "",
-      count: 0,
-      value: 0,
-      data_point_count: 0,
-      includes_secondary: false,
-      listing_count: 0,
+    lines: [],
+    currencyDetails: [],
+    language: {
+      name: "",
+      translations: {},
     },
   },
 };
@@ -41,10 +24,27 @@ const initialState: PathOfExileState = {
 /**
  * Fetch currency rates from poe.ninja API.
  */
-export const fetchPathOfExileCurrency = createAsyncThunk("counter/fetchPathOfExileCurrency", async () => {
+export const fetchPathOfExileCurrency = createAsyncThunk("pathOfExile/fetchPathOfExileCurrency", async () => {
   const response = await fetchCorsProxy(CURRENCY_URL);
-  return await response.json();
+  const responseJson = await response.json();
+
+  return responseJson;
 });
+
+/**
+ * Fetch prices for the input trade search query.
+ */
+export const fetchPathOfExileTradeSearchPrice = createAsyncThunk(
+  "pathOfExile/fetchPathOfExileTradeSearchPrice",
+  async (query: unknown) => {
+    const tradeSearchResults: TradeFetchResult[] = await fetchPathOfExileTrade(query);
+    const prices = tradeSearchResults.map((tradeSearchResult: TradeFetchResult) => tradeSearchResult.listing.price);
+
+    console.log(prices);
+
+    // TODO: convert prices to c
+  }
+);
 
 export const pathOfExileSlice = createSlice({
   name: "pathOfExile",

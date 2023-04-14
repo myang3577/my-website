@@ -1,7 +1,11 @@
 import { Paper } from "@mui/material";
 import { useEffect } from "react";
 
-import { fetchPathOfExileCurrency, selectPathOfExileCurrency } from "../../slices/pathofexile/PathOfExileSlice";
+import {
+  fetchPathOfExileCurrency,
+  fetchPathOfExileTradeSearchPrice,
+  selectPathOfExileCurrency,
+} from "../../slices/pathofexile/PathOfExileSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 
 const PathOfExile = () => {
@@ -11,11 +15,21 @@ const PathOfExile = () => {
 
   useEffect(() => {
     dispatch(fetchPathOfExileCurrency());
+    dispatch(
+      fetchPathOfExileTradeSearchPrice({
+        query: {
+          status: { option: "onlineleague" },
+          type: "Voidborn Reliquary Key",
+          stats: [{ type: "and", filters: [], disabled: false }],
+        },
+        sort: { price: "asc" },
+      })
+    );
   }, []);
 
-  useEffect(() => {
-    console.log(currency);
-  }, [currency]);
+  // useEffect(() => {
+  //   console.log(currency);
+  // }, [currency]);
 
   return (
     <Paper

@@ -71,8 +71,6 @@ const Warframe = () => {
       id: e.uniqueName,
     }));
 
-    console.log(weaponsData);
-
     setWfExportWeapons(weaponsData);
   }, [warframeExports]);
 
