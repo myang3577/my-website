@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { LOADING_STATE } from "../constants/Constants";
-import { RootState } from "../store";
+import { LOADING_STATE } from "../../constants/Constants";
+import { RootState } from "../../store";
 
 const MANIFEST_URL = "https://content.warframe.com/PublicExport/Manifest/";
 

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { LOADING_STATE } from "../constants/Constants";
-import { RootState } from "../store";
-import { fetchCorsProxy } from "../utils/Utils";
+import { LOADING_STATE } from "../../constants/Constants";
+import { RootState } from "../../store";
+import { fetchCorsProxy } from "../../utils/Utils";
 import { CURRENCY_URL } from "./PathOfExileConstants";
 import { PathOfExileState } from "./PathOfExileTypes";
 

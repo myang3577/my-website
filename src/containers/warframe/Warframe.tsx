@@ -9,7 +9,7 @@ import {
   fetchExports,
   selectWarframeExports,
   selectWarframeExportStatus,
-} from "../../slices/WarframeSlice";
+} from "../../slices/warframe/WarframeSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 
 interface WarframeExportWeaponsObject {

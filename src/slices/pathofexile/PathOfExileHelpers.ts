@@ -1,4 +1,4 @@
-import { fetchCorsProxy } from "../utils/Utils";
+import { fetchCorsProxy } from "../../utils/Utils";
 import { TRADE_SEARCH_URL } from "./PathOfExileConstants";
 import { TradeSearchResponse } from "./PathOfExileTypes";
 

@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material";
 import { useEffect } from "react";
 
-import { fetchPathOfExileCurrency, selectPathOfExileCurrency } from "../../slices/PathOfExileSlice";
+import { fetchPathOfExileCurrency, selectPathOfExileCurrency } from "../../slices/pathofexile/PathOfExileSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 
 const PathOfExile = () => {

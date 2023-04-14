@@ -1,4 +1,4 @@
-import { LOADING_STATE } from "../constants/Constants";
+import { LOADING_STATE } from "../../constants/Constants";
 
 export interface PathOfExileState {
   value: number;
