@@ -10,6 +10,9 @@ function App() {
       <Link to={"warframe"}>
         <Button>Warframe</Button>
       </Link>
+      <Link to={"pathofexile"}>
+        <Button>Path of Exile</Button>
+      </Link>
     </Paper>
   );
 }
