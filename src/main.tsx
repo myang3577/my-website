@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./containers/App";
-import PathOfExile from "./containers/pathofexile/PathOfEXile";
+import PathOfExile from "./containers/pathofexile/PathOfExile";
 import Warframe from "./containers/warframe/Warframe";
 import { store } from "./store";
 
@@ -744,13 +744,13 @@ const theme = createTheme(themeOptions);
 // });
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <LazyMotion features={domMax}>
-          <RouterProvider router={router} />
-        </LazyMotion>
-      </ThemeProvider>
-    </Provider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <LazyMotion features={domMax}>
+        <RouterProvider router={router} />
+      </LazyMotion>
+    </ThemeProvider>
+  </Provider>
+  // </React.StrictMode>
 );

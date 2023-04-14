@@ -2,35 +2,9 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { LOADING_STATE } from "../constants/Constants";
 import { RootState } from "../store";
-
-const CORS_PROXY = "https://corsproxy.io/?";
-
-const CURRENCY_URL = `${CORS_PROXY}https://poe.ninja/api/data/currencyoverview?league=Crucible&type=Currency&language=en`;
-
-export interface Currency {
-  currencyTypeName: string;
-  pay: PayReceive;
-  receive: PayReceive;
-}
-
-export interface PayReceive {
-  id: number;
-  league_id: number;
-  pay_currency_id: number;
-  get_currency_id: number;
-  sample_time_utc: string;
-  count: number;
-  value: number;
-  data_point_count: number;
-  includes_secondary: boolean;
-  listing_count: number;
-}
-
-export interface PathOfExileState {
-  value: number;
-  currencyStatus: LOADING_STATE;
-  currency: Currency;
-}
+import { fetchCorsProxy } from "../utils/Utils";
+import { CURRENCY_URL } from "./PathOfExileConstants";
+import { PathOfExileState } from "./PathOfExileTypes";
 
 const initialState: PathOfExileState = {
   value: 0,
@@ -68,10 +42,8 @@ const initialState: PathOfExileState = {
  * Fetch currency rates from poe.ninja API.
  */
 export const fetchPathOfExileCurrency = createAsyncThunk("counter/fetchPathOfExileCurrency", async () => {
-  const response = await fetch(CURRENCY_URL);
-  const responseJson = await response.json();
-
-  return responseJson;
+  const response = await fetchCorsProxy(CURRENCY_URL);
+  return await response.json();
 });
 
 export const pathOfExileSlice = createSlice({
