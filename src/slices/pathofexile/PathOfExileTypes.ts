@@ -13,3 +13,8 @@ export interface TradeSearchResponse {
   result: TradeFetchResult[];
   total: number;
 }
+
+export interface FetchTradeSearchPriceInput {
+  tradeQuery: unknown;
+  currency: PoeNinjaCurrencyResult;
+}

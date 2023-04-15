@@ -3,9 +3,10 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LOADING_STATE } from "../../constants/Constants";
 import { RootState } from "../../store";
 import { fetchCorsProxy } from "../../utils/Utils";
-import { CURRENCY_URL } from "./PathOfExileConstants";
+import { CURRENCY_URL, TRADE_TO_POE_NINJA_CURRENCY } from "./PathOfExileConstants";
 import { fetchPathOfExileTrade } from "./PathOfExileHelpers";
-import { PathOfExileState } from "./PathOfExileTypes";
+import { FetchTradeSearchPriceInput, PathOfExileState } from "./PathOfExileTypes";
+import { PoeNinjaCurrencyResult } from "./types/PoeNinjaCurrencyResult";
 import { TradeFetchResult } from "./types/TradeFetchResult";
 
 const initialState: PathOfExileState = {
@@ -32,17 +33,26 @@ export const fetchPathOfExileCurrency = createAsyncThunk("pathOfExile/fetchPathO
 });
 
 /**
- * Fetch prices for the input trade search query.
+ * Fetches average chaos price of first 5 results for the input trade search query.
  */
 export const fetchPathOfExileTradeSearchPrice = createAsyncThunk(
   "pathOfExile/fetchPathOfExileTradeSearchPrice",
-  async (query: unknown) => {
-    const tradeSearchResults: TradeFetchResult[] = await fetchPathOfExileTrade(query);
+  async (input: FetchTradeSearchPriceInput) => {
+    const getChaosEquivalent = (currency: string, poeNinjaCurrency: PoeNinjaCurrencyResult): number =>
+      poeNinjaCurrency.lines.filter((line) => TRADE_TO_POE_NINJA_CURRENCY[currency] === line.currencyTypeName)[0]
+        .chaosEquivalent;
+
+    const tradeSearchResults: TradeFetchResult[] = await fetchPathOfExileTrade(input.tradeQuery);
     const prices = tradeSearchResults.map((tradeSearchResult: TradeFetchResult) => tradeSearchResult.listing.price);
 
-    console.log(prices);
+    const avgPrice =
+      prices
+        .map((price) =>
+          price.currency === "chaos" ? price.amount : price.amount * getChaosEquivalent(price.currency, input.currency)
+        )
+        .reduce((acc, price) => acc + price, 0) / prices.length;
 
-    // TODO: convert prices to c
+    return avgPrice;
   }
 );
 
@@ -66,7 +76,7 @@ export const pathOfExileSlice = createSlice({
         state.currencyStatus = LOADING_STATE.LOADING;
       })
       .addCase(fetchPathOfExileCurrency.fulfilled, (state, action) => {
-        state.currencyStatus = LOADING_STATE.IDLE;
+        state.currencyStatus = LOADING_STATE.COMPLETE;
         state.currency = action.payload;
       })
       .addCase(fetchPathOfExileCurrency.rejected, (state) => {
