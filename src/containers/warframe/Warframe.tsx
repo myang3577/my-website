@@ -11,6 +11,7 @@ import {
   selectWarframeExportStatus,
 } from "../../slices/warframe/WarframeSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
+import { withIdField } from "../../utils/Utils";
 
 interface WarframeExportWeaponsObject {
   name: string;
@@ -47,14 +48,18 @@ const columns: GridColDef[] = [
 const Warframe = () => {
   const dispatch = useAppDispatch();
 
-  const status = useAppSelector(selectWarframeExportStatus);
+  const warframeExportStatus = useAppSelector(selectWarframeExportStatus);
   const warframeExports = useAppSelector(selectWarframeExports);
 
   const [wfExportWeapons, setWfExportWeapons] = useState<WarframeExportWeaponsObject[]>([]);
 
-  // useEffect(() => {
-  //   dispatch(fetchExports());
-  // }, []);
+  useEffect(() => {
+    if (warframeExportStatus === LOADING_STATE.COMPLETE) {
+      return;
+    }
+
+    dispatch(fetchExports());
+  }, []);
 
   useEffect(() => {
     const EXPORT_WEAPONS = "ExportWeapons";
@@ -66,12 +71,7 @@ const Warframe = () => {
     const exportWeaponsObject = warframeExports[EXPORT_WEAPONS_EN];
     const exportWeaponsData = exportWeaponsObject[EXPORT_WEAPONS] as WarframeExportWeaponsObject[];
 
-    const weaponsData = exportWeaponsData.map((e) => ({
-      ...e,
-      id: e.uniqueName,
-    }));
-
-    setWfExportWeapons(weaponsData);
+    setWfExportWeapons(withIdField(exportWeaponsData));
   }, [warframeExports]);
 
   return (
@@ -93,7 +93,7 @@ const Warframe = () => {
             </Typography>
             <LoadingButton
               onClick={() => dispatch(fetchExports())}
-              loading={status === LOADING_STATE.LOADING}
+              loading={warframeExportStatus === LOADING_STATE.LOADING}
               variant="contained"
             >
               Fetch Warframe Exports
@@ -103,7 +103,7 @@ const Warframe = () => {
               columns={columns}
               checkboxSelection
               autoHeight
-              loading={status === LOADING_STATE.LOADING}
+              loading={warframeExportStatus === LOADING_STATE.LOADING}
             />
           </Paper>
         </Grid>

@@ -20,6 +20,7 @@ const initialState: PathOfExileState = {
       translations: {},
     },
   },
+  averagePrices: {},
 };
 
 /**
@@ -52,7 +53,7 @@ export const fetchPathOfExileTradeSearchPrice = createAsyncThunk(
         )
         .reduce((acc, price) => acc + price, 0) / prices.length;
 
-    return avgPrice;
+    return { itemName: input.itemName, price: avgPrice };
   }
 );
 
@@ -81,6 +82,9 @@ export const pathOfExileSlice = createSlice({
       })
       .addCase(fetchPathOfExileCurrency.rejected, (state) => {
         state.currencyStatus = LOADING_STATE.FAILED;
+      })
+      .addCase(fetchPathOfExileTradeSearchPrice.fulfilled, (state, action) => {
+        state.averagePrices[action.payload.itemName] = action.payload.price;
       });
   },
 });
@@ -89,5 +93,7 @@ export const { increment, decrement, incrementByAmount } = pathOfExileSlice.acti
 
 export const selectPathOfExileCurrency = (state: RootState) => state.pathOfExile.currency;
 export const selectPathOfExileCurrencyStatus = (state: RootState) => state.pathOfExile.currencyStatus;
+export const selectPathOfExileAveragePrice = (itemName: string) => (state: RootState) =>
+  state.pathOfExile.averagePrices[itemName];
 
 export default pathOfExileSlice.reducer;

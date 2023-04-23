@@ -109,7 +109,7 @@ export const warframeSlice = createSlice({
         state.warframeExportStatus = LOADING_STATE.LOADING;
       })
       .addCase(fetchExports.fulfilled, (state, action) => {
-        state.warframeExportStatus = LOADING_STATE.IDLE;
+        state.warframeExportStatus = LOADING_STATE.COMPLETE;
         state.warframeExports = action.payload;
       })
       .addCase(fetchExports.rejected, (state) => {

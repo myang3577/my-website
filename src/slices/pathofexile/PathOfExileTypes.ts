@@ -6,6 +6,7 @@ export interface PathOfExileState {
   value: number;
   currencyStatus: LOADING_STATE;
   currency: PoeNinjaCurrencyResult;
+  averagePrices: { [name: string]: number };
 }
 
 export interface TradeSearchResponse {
@@ -15,6 +16,7 @@ export interface TradeSearchResponse {
 }
 
 export interface FetchTradeSearchPriceInput {
+  itemName: string;
   tradeQuery: unknown;
   currency: PoeNinjaCurrencyResult;
 }
