@@ -1,7 +1,7 @@
 import { Button, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { BlobSvg } from "../components/blob/BlobSvg";
+import { BlobSvg } from "./blob/BlobSvg";
 
 function App() {
   return (

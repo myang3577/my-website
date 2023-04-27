@@ -6,9 +6,9 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import App from "./containers/App";
-import PathOfExile from "./containers/pathofexile/PathOfExile";
-import Warframe from "./containers/warframe/Warframe";
+import App from "./components/App";
+import PathOfExile from "./components/pathofexile/PathOfExile";
+import Warframe from "./components/warframe/Warframe";
 import { store } from "./store";
 
 const container = document.getElementById("root") as HTMLElement;
