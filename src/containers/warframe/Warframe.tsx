@@ -1,4 +1,3 @@
-import { LoadingButton } from "@mui/lab";
 import { Paper, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
@@ -12,6 +11,7 @@ import {
 } from "../../slices/warframe/WarframeSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { withIdField } from "../../utils/Utils";
+import { MASTERY_COMPLETED } from "./MasteryCompletedList";
 
 interface WarframeExportWeaponsObject {
   name: string;
@@ -51,7 +51,8 @@ const Warframe = () => {
   const warframeExportStatus = useAppSelector(selectWarframeExportStatus);
   const warframeExports = useAppSelector(selectWarframeExports);
 
-  const [wfExportWeapons, setWfExportWeapons] = useState<WarframeExportWeaponsObject[]>([]);
+  const [uncompletedWeapons, setUncompletedWeapons] = useState<WarframeExportWeaponsObject[]>([]);
+  const [completedWeapons, setCompletedWeapons] = useState<WarframeExportWeaponsObject[]>([]);
 
   useEffect(() => {
     if (warframeExportStatus === LOADING_STATE.COMPLETE) {
@@ -71,7 +72,15 @@ const Warframe = () => {
     const exportWeaponsObject = warframeExports[EXPORT_WEAPONS_EN];
     const exportWeaponsData = exportWeaponsObject[EXPORT_WEAPONS] as WarframeExportWeaponsObject[];
 
-    setWfExportWeapons(withIdField(exportWeaponsData));
+    const uncompletedWeaponsData = exportWeaponsData.filter(
+      (weapon: WarframeExportWeaponsObject) => !MASTERY_COMPLETED.includes(weapon.name)
+    );
+    const completedWeaponsData = exportWeaponsData.filter((weapon: WarframeExportWeaponsObject) =>
+      MASTERY_COMPLETED.includes(weapon.name)
+    );
+
+    setUncompletedWeapons(withIdField(uncompletedWeaponsData));
+    setCompletedWeapons(withIdField(completedWeaponsData));
   }, [warframeExports]);
 
   return (
@@ -84,22 +93,33 @@ const Warframe = () => {
       }}
       elevation={0}
     >
-      <Grid container spacing={3} columns={1} sx={{ width: "100%", margin: "auto" }}>
-        {/* Weapons section */}
+      <Grid container spacing={3} columns={2} sx={{ width: "100%", margin: "auto" }}>
+        <Grid xs={2}>
+          <Typography variant="h4">Warframe Weapons</Typography>
+        </Grid>
+
         <Grid xs={1}>
-          <Paper sx={{ p: "10px" }}>
-            <Typography variant="h4" marginBottom={1}>
-              Warframe Weapons
+          <Paper sx={{ p: "10px" }} variant="outlined">
+            <Typography variant="h5" marginBottom={1}>
+              Mastery uncompleted weapons
             </Typography>
-            <LoadingButton
-              onClick={() => dispatch(fetchExports())}
-              loading={warframeExportStatus === LOADING_STATE.LOADING}
-              variant="contained"
-            >
-              Fetch Warframe Exports
-            </LoadingButton>
             <DataGrid
-              rows={wfExportWeapons}
+              rows={uncompletedWeapons}
+              columns={columns}
+              checkboxSelection
+              autoHeight
+              loading={warframeExportStatus === LOADING_STATE.LOADING}
+            />
+          </Paper>
+        </Grid>
+
+        <Grid xs={1}>
+          <Paper sx={{ p: "10px" }} variant="outlined">
+            <Typography variant="h5" marginBottom={1}>
+              Mastery completed weapons
+            </Typography>
+            <DataGrid
+              rows={completedWeapons}
               columns={columns}
               checkboxSelection
               autoHeight

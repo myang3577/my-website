@@ -47,9 +47,12 @@ const themeOptions: ThemeOptions = {
       textTransform: "none",
       fontWeight: 700,
     },
-    h4: {
-      fontWeight: 700,
-    },
+    // h5: {
+    //   fontWeight: 700,
+    // },
+    // h4: {
+    //   fontWeight: 700,
+    // },
   },
 };
 
