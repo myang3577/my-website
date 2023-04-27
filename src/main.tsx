@@ -1,62 +1,12 @@
-import "./index.css";
-
-import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material/styles";
 import { domMax, LazyMotion } from "framer-motion";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./components/App";
-import PathOfExile from "./components/pathofexile/PathOfExile";
-import Warframe from "./components/warframe/Warframe";
 import { store } from "./store";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
-
-const router = createBrowserRouter([
-  {
-    path: "/my-website",
-    element: <App />,
-  },
-  {
-    path: "/my-website/warframe",
-    element: <Warframe />,
-  },
-  {
-    path: "/my-website/pathofexile",
-    element: <PathOfExile />,
-  },
-]);
-
-const themeOptions: ThemeOptions = {
-  palette: { mode: "light" },
-  shape: {
-    borderRadius: 10,
-  },
-  components: {
-    MuiButton: {
-      defaultProps: {
-        disableElevation: true,
-      },
-    },
-  },
-  typography: {
-    fontFamily: "Noto Sans",
-    button: {
-      textTransform: "none",
-      fontWeight: 700,
-    },
-    // h5: {
-    //   fontWeight: 700,
-    // },
-    // h4: {
-    //   fontWeight: 700,
-    // },
-  },
-};
-
-const theme = createTheme(themeOptions);
 
 // https://mui.com/material-ui/customization/default-theme/
 // const defaultUnusedTheme = createTheme({
@@ -748,11 +698,9 @@ const theme = createTheme(themeOptions);
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <LazyMotion features={domMax}>
-        <RouterProvider router={router} />
-      </LazyMotion>
-    </ThemeProvider>
+    <LazyMotion features={domMax}>
+      <App />
+    </LazyMotion>
   </Provider>
   // </React.StrictMode>
 );
