@@ -1,30 +1,25 @@
 import "./App.module.scss";
 
-import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
-import { IconButton, Paper } from "@mui/material";
+import { Paper, Theme } from "@mui/material";
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material/styles";
 import { useMemo, useState } from "react";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
+import { BlobSvg } from "./blob/BlobSvg";
 import Homepage from "./Homepage";
 import PathOfExile from "./pathofexile/PathOfExile";
 import Warframe from "./warframe/Warframe";
 
-function App() {
-  const router = createHashRouter([
-    {
-      path: "/",
-      element: <Homepage />,
-    },
-    {
-      path: "/warframe",
-      element: <Warframe />,
-    },
-    {
-      path: "/pathofexile",
-      element: <PathOfExile />,
-    },
-  ]);
+const App = () => {
+  const [mode, setMode] = useState<"light" | "dark">("light");
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
+    }),
+    []
+  );
 
   const themeOptions: ThemeOptions = {
     palette: { mode: "light" },
@@ -50,17 +45,7 @@ function App() {
     },
   };
 
-  const [mode, setMode] = useState<"light" | "dark">("light");
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    []
-  );
-
-  const theme = useMemo(() => {
+  const theme: Theme = useMemo(() => {
     const newThemeOptions = structuredClone(themeOptions);
     newThemeOptions.palette = {
       mode,
@@ -69,16 +54,34 @@ function App() {
     return createTheme(newThemeOptions);
   }, [mode]);
 
+  const router = createHashRouter([
+    {
+      path: "/",
+      element: <Homepage toggleColorMode={colorMode.toggleColorMode} theme={theme} />,
+      children: [
+        {
+          path: "/warframe",
+          element: <Warframe />,
+        },
+        {
+          path: "/pathofexile",
+          element: <PathOfExile />,
+        },
+        {
+          path: "/blob",
+          element: <BlobSvg />,
+        },
+      ],
+    },
+  ]);
+
   return (
     <ThemeProvider theme={theme}>
-      <Paper square sx={{ m: 0 }} variant="elevation" elevation={0}>
-        <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-          {theme.palette.mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
-        </IconButton>
+      <Paper square variant="elevation" elevation={0}>
         <RouterProvider router={router} />
       </Paper>
     </ThemeProvider>
   );
-}
+};
 
 export default App;
