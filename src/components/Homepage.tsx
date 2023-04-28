@@ -30,7 +30,7 @@ const TABS: TabDef[] = [
 const Homepage = ({ toggleColorMode, theme }: HomepageProps) => {
   return (
     <>
-      <AppBar variant="outlined" position="sticky" enableColorOnDark>
+      <AppBar variant="outlined" elevation={0} position="sticky" enableColorOnDark>
         <Toolbar variant="dense">
           <Typography>Website</Typography>
 
@@ -52,6 +52,7 @@ const Homepage = ({ toggleColorMode, theme }: HomepageProps) => {
           </IconButton>
         </Toolbar>
       </AppBar>
+
       <Outlet />
     </>
   );

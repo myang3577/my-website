@@ -13,6 +13,7 @@ import {
 import { PoeNinjaCurrencyResult } from "../../slices/pathofexile/types/PoeNinjaCurrencyResult";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { withIdField } from "../../utils/Utils";
+
 const PathOfExile = () => {
   const dispatch = useAppDispatch();
 
@@ -62,7 +63,6 @@ const PathOfExile = () => {
         borderRadius: 0,
         overflow: "auto",
       }}
-      elevation={0}
     >
       <Grid container spacing={3} columns={1} sx={{ width: "100%", margin: "auto" }}>
         <Grid xs={1}>

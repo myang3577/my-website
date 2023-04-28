@@ -37,6 +37,7 @@ const App = () => {
       MuiPaper: {
         defaultProps: {
           variant: "outlined",
+          elevation: 0,
         },
       },
     },

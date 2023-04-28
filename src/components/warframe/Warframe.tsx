@@ -3,38 +3,13 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
 import { LOADING_STATE } from "../../constants/Constants";
-import {
-  EXPORT_WEAPONS_EN,
-  fetchExports,
-  selectWarframeExports,
-  selectWarframeExportStatus,
-} from "../../slices/warframe/WarframeSlice";
+import { ExportWeapon } from "../../slices/warframe/types/export/ExportWeapons_en";
+import { EXPORT_WEAPONS_EN } from "../../slices/warframe/types/WarframeState";
+import { fetchExports, selectWarframeExports, selectWarframeExportStatus } from "../../slices/warframe/WarframeSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { withIdField } from "../../utils/Utils";
 import { MASTERY_COMPLETED } from "./MasteryCompletedList";
-
-interface WarframeExportWeaponsObject {
-  name: string;
-  uniqueName: string;
-  codexSecret: boolean;
-  damagePerShot: number[];
-  totalDamage: number;
-  description: string;
-  criticalChance: number;
-  criticalMultiplier: number;
-  procChance: number;
-  fireRate: number;
-  masteryReq: number;
-  productCategory: string;
-  slot: number;
-  accuracy: number;
-  omegaAttenuation: number;
-  noise: string;
-  trigger: string;
-  magazineSize: number;
-  reloadTime: number;
-  multishot: number;
-}
+import WeaponCard from "./WeaponCard";
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", minWidth: 250 },
@@ -51,8 +26,8 @@ const Warframe = () => {
   const warframeExportStatus = useAppSelector(selectWarframeExportStatus);
   const warframeExports = useAppSelector(selectWarframeExports);
 
-  const [uncompletedWeapons, setUncompletedWeapons] = useState<WarframeExportWeaponsObject[]>([]);
-  const [completedWeapons, setCompletedWeapons] = useState<WarframeExportWeaponsObject[]>([]);
+  const [uncompletedWeapons, setUncompletedWeapons] = useState<ExportWeapon[]>([]);
+  const [completedWeapons, setCompletedWeapons] = useState<ExportWeapon[]>([]);
 
   useEffect(() => {
     if (warframeExportStatus === LOADING_STATE.COMPLETE) {
@@ -70,12 +45,12 @@ const Warframe = () => {
     }
 
     const exportWeaponsObject = warframeExports[EXPORT_WEAPONS_EN];
-    const exportWeaponsData = exportWeaponsObject[EXPORT_WEAPONS] as WarframeExportWeaponsObject[];
+    const exportWeaponsData = exportWeaponsObject.ExportWeapons;
 
     const uncompletedWeaponsData = exportWeaponsData.filter(
-      (weapon: WarframeExportWeaponsObject) => !MASTERY_COMPLETED.includes(weapon.name)
+      (weapon: ExportWeapon) => !MASTERY_COMPLETED.includes(weapon.name)
     );
-    const completedWeaponsData = exportWeaponsData.filter((weapon: WarframeExportWeaponsObject) =>
+    const completedWeaponsData = exportWeaponsData.filter((weapon: ExportWeapon) =>
       MASTERY_COMPLETED.includes(weapon.name)
     );
 
@@ -88,6 +63,9 @@ const Warframe = () => {
       <Grid container spacing={3} columns={2} sx={{ width: "100%", margin: "auto" }}>
         <Grid xs={2}>
           <Typography variant="h4">Warframe Weapons</Typography>
+        </Grid>
+        <Grid xs={2}>
+          <WeaponCard weapon={completedWeapons[0]} />
         </Grid>
 
         <Grid xs={1}>
