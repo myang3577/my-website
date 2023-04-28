@@ -84,22 +84,14 @@ const Warframe = () => {
   }, [warframeExports]);
 
   return (
-    <Paper
-      sx={{
-        height: "100vh",
-        width: "100vw",
-        borderRadius: 0,
-        overflow: "auto",
-      }}
-      elevation={0}
-    >
+    <Paper>
       <Grid container spacing={3} columns={2} sx={{ width: "100%", margin: "auto" }}>
         <Grid xs={2}>
           <Typography variant="h4">Warframe Weapons</Typography>
         </Grid>
 
         <Grid xs={1}>
-          <Paper sx={{ p: "10px" }} variant="outlined">
+          <Paper sx={{ p: "10px" }}>
             <Typography variant="h5" marginBottom={1}>
               Mastery uncompleted weapons
             </Typography>
@@ -114,7 +106,7 @@ const Warframe = () => {
         </Grid>
 
         <Grid xs={1}>
-          <Paper sx={{ p: "10px" }} variant="outlined">
+          <Paper sx={{ p: "10px" }}>
             <Typography variant="h5" marginBottom={1}>
               Mastery completed weapons
             </Typography>
