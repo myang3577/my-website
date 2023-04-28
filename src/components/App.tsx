@@ -2,24 +2,24 @@ import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material/styles";
 import { useMemo, useState } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import Homepage from "./Homepage";
 import PathOfExile from "./pathofexile/PathOfExile";
 import Warframe from "./warframe/Warframe";
 
 function App() {
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
-      path: "/my-website",
+      path: "/",
       element: <Homepage />,
     },
     {
-      path: "/my-website/warframe",
+      path: "/warframe",
       element: <Warframe />,
     },
     {
-      path: "/my-website/pathofexile",
+      path: "/pathofexile",
       element: <PathOfExile />,
     },
   ]);
