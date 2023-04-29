@@ -29,6 +29,7 @@ interface WeaponCardProps {
 const WeaponCard = ({ weapon }: WeaponCardProps) => {
   const warframeExports = useAppSelector(selectWarframeExports);
 
+  // Handling image location
   const [imageLocation, setImageLocation] = useState<string>("");
   const exportManifest = warframeExports[EXPORT_MANIFEST];
   useEffect(() => {
@@ -39,6 +40,7 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
     if (weaponManifest !== undefined) setImageLocation(getImage(weapon.uniqueName, exportManifest));
   }, [exportManifest, weapon]);
 
+  // Handling ingredients
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const exportRecipes = warframeExports[EXPORT_RECIPES_EN];
   useEffect(() => {
@@ -48,7 +50,10 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
       (recipe: ExportRecipe) => recipe.resultType === weapon.uniqueName
     );
 
-    if (weaponRecipe !== undefined) setIngredients(weaponRecipe.ingredients);
+    if (weaponRecipe !== undefined) {
+      setIngredients(weaponRecipe.ingredients);
+      // dispatch(addUncompletedWeaponIngredients(weaponRecipe.ingredients));
+    }
   }, [exportRecipes, weapon]);
 
   return (
@@ -61,10 +66,7 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
             avatar={<Avatar src={imageLocation} variant="rounded" />}
             title={
               <Link href={getWikiLink(weapon.name)} underline="hover" target="_blank">
-                <Typography variant="h6" marginBottom={1}>
-                  {" "}
-                  {weapon.name}
-                </Typography>
+                <Typography variant="h6">{weapon.name}</Typography>
               </Link>
             }
             subheader={weapon.productCategory}

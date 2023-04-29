@@ -52,10 +52,16 @@ export type WarframeExports = {
   [EXPORT_MANIFEST]: ExportManifest;
 };
 
+export interface IngredientCount {
+  ingredient: string;
+  count: number;
+}
+
 export interface WarframeState {
   value: number;
   warframeExportStatus: LOADING_STATE;
   warframeExports: WarframeExports;
+  uncompletedWeaponIngredientCount: { [k: string]: number };
 }
 
 export const getDefaultWarframeExport = (): WarframeExports =>

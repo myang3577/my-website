@@ -11,7 +11,7 @@ import PathOfExile from "./pathofexile/PathOfExile";
 import Warframe from "./warframe/Warframe";
 
 const App = () => {
-  const [mode, setMode] = useState<"light" | "dark">("light");
+  const [mode, setMode] = useState<"light" | "dark">("dark");
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {

@@ -9,7 +9,7 @@ import { ExportFusionBundlesEn } from "./types/export/ExportFusionBundles_en";
 import { ExportGearEn } from "./types/export/ExportGear_en";
 import { ExportKeysEn } from "./types/export/ExportKeys_en";
 import { ExportManifest } from "./types/export/ExportManifest";
-import { ExportRecipesEn } from "./types/export/ExportRecipes_en";
+import { ExportRecipesEn, Ingredient } from "./types/export/ExportRecipes_en";
 import { ExportRegionsEn } from "./types/export/ExportRegions_en";
 import { ExportRelicArcaneEn } from "./types/export/ExportRelicArcane_en";
 import { ExportResourcesEn } from "./types/export/ExportResources_en";
@@ -46,6 +46,7 @@ const initialState: WarframeState = {
   value: 0,
   warframeExportStatus: LOADING_STATE.IDLE,
   warframeExports: getDefaultWarframeExport(),
+  uncompletedWeaponIngredientCount: {},
 };
 
 /**
@@ -150,21 +151,15 @@ export const fetchExports = createAsyncThunk("warframe/fetchExports", async () =
 export const warframeSlice = createSlice({
   name: "warframe",
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    increment: (state: WarframeState) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
-    },
-    decrement: (state: WarframeState) => {
-      state.value -= 1;
-    },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state: WarframeState, action: PayloadAction<number>) => {
-      state.value += action.payload;
+    addUncompletedWeaponIngredients: (state: WarframeState, action: PayloadAction<Ingredient[]>) => {
+      action.payload.forEach((ingredient) => {
+        if (state.uncompletedWeaponIngredientCount[ingredient.ItemType] === undefined) {
+          state.uncompletedWeaponIngredientCount[ingredient.ItemType] = ingredient.ItemCount;
+        } else {
+          state.uncompletedWeaponIngredientCount[ingredient.ItemType] += ingredient.ItemCount;
+        }
+      });
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -184,9 +179,11 @@ export const warframeSlice = createSlice({
   },
 });
 
-export const { increment, decrement, incrementByAmount } = warframeSlice.actions;
+export const { addUncompletedWeaponIngredients } = warframeSlice.actions;
 
 export const selectWarframeExportStatus = (state: RootState) => state.warframe.warframeExportStatus;
 export const selectWarframeExports = (state: RootState) => state.warframe.warframeExports;
+export const selectUncompletedWeaponIngredientCount = (state: RootState) =>
+  state.warframe.uncompletedWeaponIngredientCount;
 
 export default warframeSlice.reducer;
