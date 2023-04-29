@@ -1,4 +1,4 @@
-import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
+import { DarkModeOutlined, GitHub, LightModeOutlined } from "@mui/icons-material";
 import { AppBar, Button, IconButton, Stack, Theme, Toolbar, Typography } from "@mui/material";
 import { Link, Outlet } from "react-router-dom";
 
@@ -46,6 +46,10 @@ const Homepage = ({ toggleColorMode, theme }: HomepageProps) => {
               </Button>
             ))}
           </Stack>
+
+          <IconButton href="https://github.com/myang3577/my-website" target="_blank" color="inherit">
+            <GitHub />
+          </IconButton>
 
           <IconButton onClick={toggleColorMode} color="inherit">
             {theme.palette.mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
