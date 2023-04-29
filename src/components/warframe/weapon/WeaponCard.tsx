@@ -20,7 +20,7 @@ import { ExportWeapon } from "../../../slices/warframe/types/export/ExportWeapon
 import { EXPORT_MANIFEST, EXPORT_RECIPES_EN } from "../../../slices/warframe/types/WarframeState";
 import { selectWarframeExports } from "../../../slices/warframe/WarframeSlice";
 import { useAppSelector } from "../../../store";
-import { getImage } from "../Utils";
+import { getImage, getWikiLink } from "../Utils";
 
 interface WeaponCardProps {
   weapon: ExportWeapon;
@@ -60,7 +60,7 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
           <CardHeader
             avatar={<Avatar src={imageLocation} variant="rounded" />}
             title={
-              <Link href={`https://warframe.fandom.com/wiki/${weapon.name}`} underline="hover" target="_blank">
+              <Link href={getWikiLink(weapon.name)} underline="hover" target="_blank">
                 <Typography variant="h6" marginBottom={1}>
                   {" "}
                   {weapon.name}

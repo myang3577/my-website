@@ -13,3 +13,9 @@ export const getImage = (item: string, exportManifest: ExportManifest): string =
 
   return "/Lotus/Interface/Icons/StoreIcons/Cosmetics/Syandanas/VanquishedBanner.png!00_tRfVpDeIxYKopXuvOIooOg";
 };
+
+export const getWikiLink = (name: string) => {
+  if (name.includes("<ARCHWING>")) name = name.replace("<ARCHWING>", "").trim();
+
+  return `https://warframe.fandom.com/wiki/${name}`;
+};
