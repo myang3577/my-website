@@ -1,4 +1,4 @@
-import { Pagination, Paper, Stack, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { Paper, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import { LOADING_STATE } from "../../constants/Constants";
@@ -8,7 +8,10 @@ import { fetchExports, selectWarframeExports, selectWarframeExportStatus } from 
 import { useAppDispatch, useAppSelector } from "../../store";
 import { withIdField } from "../../utils/Utils";
 import { MASTERY_COMPLETED } from "./MasteryCompletedList";
-import WeaponCard from "./weapon/WeaponCard";
+import WeaponCardGrid from "./weapon/WeaponCardGrid";
+
+const GRID_SPACING_SIZE = 4;
+const GRID_SPACING_VALUE = 1;
 
 const Warframe = () => {
   const dispatch = useAppDispatch();
@@ -50,32 +53,15 @@ const Warframe = () => {
 
   return (
     <Paper>
-      <Grid container spacing={3} columns={2} sx={{ width: "100%", margin: "auto" }}>
+      <Grid container spacing={GRID_SPACING_VALUE} columns={2} sx={{ width: "100%", margin: "auto" }}>
         <Grid xs={2}>
           <Typography variant="h4">Warframe Weapons</Typography>
         </Grid>
 
         <Grid xs={2}>
-          <Paper sx={{ p: "4px" }}>
-            <Stack direction={"row"}>
-              <Typography
-                variant="h5"
-                marginBottom={1}
-                sx={{
-                  flexGrow: 1,
-                }}
-              >
-                Mastery uncompleted weapons
-              </Typography>
-              <Pagination count={10} variant="outlined" shape="rounded" color="primary" />
-            </Stack>
-            <Grid container spacing={1} columns={{ xs: 1, sm: 3, md: 6 }} sx={{ width: "100%", margin: "auto" }}>
-              {uncompletedWeapons.slice(0, 10).map((weapon, i) => (
-                <Grid xs={1} key={i}>
-                  <WeaponCard weapon={weapon} />
-                </Grid>
-              ))}
-            </Grid>
+          <Paper sx={{ p: `${GRID_SPACING_SIZE * GRID_SPACING_VALUE}px` }}>
+            <Typography variant="h6">Uncompleted Weapons</Typography>
+            <WeaponCardGrid weapons={uncompletedWeapons} />
           </Paper>
         </Grid>
       </Grid>

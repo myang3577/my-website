@@ -73,15 +73,15 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
             <List dense>
               <Divider variant="middle" />
               {ingredients.map((ingredient: Ingredient, i: number) => (
-                <>
-                  <ListItem key={i}>
+                <div key={i}>
+                  <ListItem>
                     <ListItemAvatar>
                       <Avatar src={getImage(ingredient.ItemType, exportManifest)} />
                     </ListItemAvatar>
                     <ListItemText primary={ingredient.ItemType.split("/").pop()} secondary={ingredient.ItemCount} />
                   </ListItem>
                   <Divider variant="middle" />
-                </>
+                </div>
               ))}
             </List>
           </CardContent>
