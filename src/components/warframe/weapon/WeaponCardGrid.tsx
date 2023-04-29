@@ -1,4 +1,4 @@
-import { Grid, Pagination, Stack } from "@mui/material";
+import { Grid, Pagination, Stack, Zoom } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 
 import { ExportWeapon } from "../../../slices/warframe/types/export/ExportWeapons_en";
@@ -30,9 +30,19 @@ const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
       </Stack>
       <Grid container spacing={0.5} columns={{ xs: 1, sm: 3, md: MAX_COL_SIZE }}>
         {weapons.slice(ITEMS * (page - 1), ITEMS * page).map((weapon, i) => (
-          <Grid item xs={1} key={i}>
-            <WeaponCard weapon={weapon} />
-          </Grid>
+          <Zoom
+            in={true}
+            timeout={1000}
+            style={{
+              transformOrigin: "0 0 0",
+              transitionDelay: `${i * 40}ms`,
+            }}
+            key={i}
+          >
+            <Grid item xs={1}>
+              <WeaponCard weapon={weapon} />
+            </Grid>
+          </Zoom>
         ))}
       </Grid>
     </>
