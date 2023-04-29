@@ -20,7 +20,7 @@ const Warframe = () => {
   const warframeExports = useAppSelector(selectWarframeExports);
 
   const [uncompletedWeapons, setUncompletedWeapons] = useState<ExportWeapon[]>([]);
-  // const [completedWeapons, setCompletedWeapons] = useState<ExportWeapon[]>([]);
+  const [completedWeapons, setCompletedWeapons] = useState<ExportWeapon[]>([]);
 
   useEffect(() => {
     if (warframeExportStatus === LOADING_STATE.COMPLETE) {
@@ -43,12 +43,12 @@ const Warframe = () => {
     const uncompletedWeaponsData = exportWeaponsData.filter(
       (weapon: ExportWeapon) => !MASTERY_COMPLETED.includes(weapon.name)
     );
-    // const completedWeaponsData = exportWeaponsData.filter((weapon: ExportWeapon) =>
-    //   MASTERY_COMPLETED.includes(weapon.name)
-    // );
+    const completedWeaponsData = exportWeaponsData.filter((weapon: ExportWeapon) =>
+      MASTERY_COMPLETED.includes(weapon.name)
+    );
 
     setUncompletedWeapons(withIdField(uncompletedWeaponsData));
-    // setCompletedWeapons(withIdField(completedWeaponsData));
+    setCompletedWeapons(withIdField(completedWeaponsData));
   }, [warframeExports]);
 
   return (
@@ -62,6 +62,13 @@ const Warframe = () => {
           <Paper sx={{ p: `${GRID_SPACING_SIZE * GRID_SPACING_VALUE}px` }}>
             <Typography variant="h6">Uncompleted Weapons</Typography>
             <WeaponCardGrid weapons={uncompletedWeapons} />
+          </Paper>
+        </Grid>
+
+        <Grid xs={2}>
+          <Paper sx={{ p: `${GRID_SPACING_SIZE * GRID_SPACING_VALUE}px` }}>
+            <Typography variant="h6">Completed Weapons</Typography>
+            <WeaponCardGrid weapons={completedWeapons} />
           </Paper>
         </Grid>
       </Grid>
