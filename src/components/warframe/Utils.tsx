@@ -1,4 +1,5 @@
 import { ExportManifest } from "../../slices/warframe/types/export/ExportManifest";
+import { ExportRecipe } from "../../slices/warframe/types/export/ExportRecipes_en";
 
 const IMAGE_BASE_URL = "https://content.warframe.com/PublicExport/";
 
@@ -18,4 +19,12 @@ export const getWikiLink = (name: string) => {
   if (name.includes("<ARCHWING>")) name = name.replace("<ARCHWING>", "").trim();
 
   return `https://warframe.fandom.com/wiki/${name}#Acquisition`;
+};
+
+export const findRecipe = (item: string, recipes: ExportRecipe[]): ExportRecipe | undefined => {
+  return recipes.find((recipe: ExportRecipe) => recipe.resultType === item);
+};
+
+export const hasRecipe = (item: string, recipes: ExportRecipe[]): boolean => {
+  return findRecipe(item, recipes) !== undefined;
 };

@@ -1,26 +1,14 @@
-import {
-  Avatar,
-  Card,
-  CardContent,
-  CardHeader,
-  CircularProgress,
-  Divider,
-  Link,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Avatar, Card, CardContent, CardHeader, CircularProgress, Link, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import { Manifest } from "../../../slices/warframe/types/export/ExportManifest";
-import { ExportRecipe, Ingredient } from "../../../slices/warframe/types/export/ExportRecipes_en";
+import { Ingredient } from "../../../slices/warframe/types/export/ExportRecipes_en";
 import { ExportWeapon } from "../../../slices/warframe/types/export/ExportWeapons_en";
 import { EXPORT_MANIFEST, EXPORT_RECIPES_EN } from "../../../slices/warframe/types/WarframeState";
 import { selectWarframeExports } from "../../../slices/warframe/WarframeSlice";
 import { useAppSelector } from "../../../store";
-import { getImage, getWikiLink } from "../Utils";
+import { findRecipe, getImage, getWikiLink } from "../Utils";
+import WeaponIngredientList from "./WeaponIngredientList";
 
 interface WeaponCardProps {
   weapon: ExportWeapon;
@@ -43,12 +31,11 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
   // Handling ingredients
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const exportRecipes = warframeExports[EXPORT_RECIPES_EN];
+
   useEffect(() => {
     if (exportRecipes === undefined || weapon === undefined) return;
 
-    const weaponRecipe = exportRecipes.ExportRecipes.find(
-      (recipe: ExportRecipe) => recipe.resultType === weapon.uniqueName
-    );
+    const weaponRecipe = findRecipe(weapon.uniqueName, exportRecipes.ExportRecipes);
 
     if (weaponRecipe !== undefined) {
       setIngredients(weaponRecipe.ingredients);
@@ -71,21 +58,9 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
             }
             subheader={weapon.productCategory}
           />
+
           <CardContent>
-            <List dense>
-              <Divider variant="middle" />
-              {ingredients.map((ingredient: Ingredient, i: number) => (
-                <div key={i}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar src={getImage(ingredient.ItemType, exportManifest)} />
-                    </ListItemAvatar>
-                    <ListItemText primary={ingredient.ItemType.split("/").pop()} secondary={ingredient.ItemCount} />
-                  </ListItem>
-                  <Divider variant="middle" />
-                </div>
-              ))}
-            </List>
+            <WeaponIngredientList ingredients={ingredients} />
           </CardContent>
         </Card>
       )}
