@@ -1,5 +1,4 @@
-import { Paper, Typography, Unstable_Grid2 as Grid } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Pagination, Paper, Stack, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import { LOADING_STATE } from "../../constants/Constants";
@@ -9,16 +8,7 @@ import { fetchExports, selectWarframeExports, selectWarframeExportStatus } from 
 import { useAppDispatch, useAppSelector } from "../../store";
 import { withIdField } from "../../utils/Utils";
 import { MASTERY_COMPLETED } from "./MasteryCompletedList";
-import WeaponCard from "./WeaponCard";
-
-const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", minWidth: 250 },
-  {
-    field: "description",
-    headerName: "Description",
-    flex: 1,
-  },
-];
+import WeaponCard from "./weapon/WeaponCard";
 
 const Warframe = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +17,7 @@ const Warframe = () => {
   const warframeExports = useAppSelector(selectWarframeExports);
 
   const [uncompletedWeapons, setUncompletedWeapons] = useState<ExportWeapon[]>([]);
-  const [completedWeapons, setCompletedWeapons] = useState<ExportWeapon[]>([]);
+  // const [completedWeapons, setCompletedWeapons] = useState<ExportWeapon[]>([]);
 
   useEffect(() => {
     if (warframeExportStatus === LOADING_STATE.COMPLETE) {
@@ -50,12 +40,12 @@ const Warframe = () => {
     const uncompletedWeaponsData = exportWeaponsData.filter(
       (weapon: ExportWeapon) => !MASTERY_COMPLETED.includes(weapon.name)
     );
-    const completedWeaponsData = exportWeaponsData.filter((weapon: ExportWeapon) =>
-      MASTERY_COMPLETED.includes(weapon.name)
-    );
+    // const completedWeaponsData = exportWeaponsData.filter((weapon: ExportWeapon) =>
+    //   MASTERY_COMPLETED.includes(weapon.name)
+    // );
 
     setUncompletedWeapons(withIdField(uncompletedWeaponsData));
-    setCompletedWeapons(withIdField(completedWeaponsData));
+    // setCompletedWeapons(withIdField(completedWeaponsData));
   }, [warframeExports]);
 
   return (
@@ -64,37 +54,28 @@ const Warframe = () => {
         <Grid xs={2}>
           <Typography variant="h4">Warframe Weapons</Typography>
         </Grid>
+
         <Grid xs={2}>
-          <WeaponCard weapon={completedWeapons[0]} />
-        </Grid>
-
-        <Grid xs={1}>
-          <Paper sx={{ p: "10px" }}>
-            <Typography variant="h5" marginBottom={1}>
-              Mastery uncompleted weapons
-            </Typography>
-            <DataGrid
-              rows={uncompletedWeapons}
-              columns={columns}
-              checkboxSelection
-              autoHeight
-              loading={warframeExportStatus === LOADING_STATE.LOADING}
-            />
-          </Paper>
-        </Grid>
-
-        <Grid xs={1}>
-          <Paper sx={{ p: "10px" }}>
-            <Typography variant="h5" marginBottom={1}>
-              Mastery completed weapons
-            </Typography>
-            <DataGrid
-              rows={completedWeapons}
-              columns={columns}
-              checkboxSelection
-              autoHeight
-              loading={warframeExportStatus === LOADING_STATE.LOADING}
-            />
+          <Paper sx={{ p: "4px" }}>
+            <Stack direction={"row"}>
+              <Typography
+                variant="h5"
+                marginBottom={1}
+                sx={{
+                  flexGrow: 1,
+                }}
+              >
+                Mastery uncompleted weapons
+              </Typography>
+              <Pagination count={10} variant="outlined" shape="rounded" color="primary" />
+            </Stack>
+            <Grid container spacing={1} columns={{ xs: 1, sm: 3, md: 6 }} sx={{ width: "100%", margin: "auto" }}>
+              {uncompletedWeapons.slice(0, 10).map((weapon, i) => (
+                <Grid xs={1} key={i}>
+                  <WeaponCard weapon={weapon} />
+                </Grid>
+              ))}
+            </Grid>
           </Paper>
         </Grid>
       </Grid>
