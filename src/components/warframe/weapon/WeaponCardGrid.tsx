@@ -1,5 +1,5 @@
 import { Grid, Pagination, Stack, Zoom } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import { ExportWeapon } from "../../../slices/warframe/types/export/ExportWeapons_en";
 import WeaponCard from "./WeaponCard";
@@ -15,6 +15,10 @@ const ITEMS = ROWS * MAX_COL_SIZE;
 const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
   const [page, setPage] = useState<number>(1);
 
+  useEffect(() => {
+    console.log(weapons);
+  }, [weapons]);
+
   return (
     <>
       <Stack alignItems={"center"}>
@@ -28,22 +32,33 @@ const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
           onChange={(_: ChangeEvent<unknown>, page: number) => setPage(page)}
         />
       </Stack>
+
       <Grid container spacing={0.5} columns={{ xs: 1, sm: 3, md: MAX_COL_SIZE }}>
-        {weapons.slice(ITEMS * (page - 1), ITEMS * page).map((weapon, i) => (
-          <Zoom
-            in={true}
-            timeout={1000}
-            style={{
-              transformOrigin: "0 0 0",
-              transitionDelay: `${i * 40}ms`,
-            }}
-            key={i}
-          >
-            <Grid item xs={1}>
-              <WeaponCard weapon={weapon} />
+        {weapons.length === 0 ? (
+          Array.from(Array(MAX_COL_SIZE).keys()).map((i) => (
+            <Grid item xs={1} key={i}>
+              <WeaponCard weapon={undefined} />
             </Grid>
-          </Zoom>
-        ))}
+          ))
+        ) : (
+          <>
+            {weapons.slice(ITEMS * (page - 1), ITEMS * page).map((weapon, i) => (
+              <Zoom
+                in={true}
+                timeout={1000}
+                style={{
+                  transformOrigin: "0 0 0",
+                  transitionDelay: `${i * 40}ms`,
+                }}
+                key={i}
+              >
+                <Grid item xs={1}>
+                  <WeaponCard weapon={weapon} />
+                </Grid>
+              </Zoom>
+            ))}
+          </>
+        )}
       </Grid>
     </>
   );

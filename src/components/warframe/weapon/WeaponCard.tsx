@@ -1,4 +1,17 @@
-import { Avatar, Card, CardContent, CardHeader, CircularProgress, Link, Typography } from "@mui/material";
+import {
+  Avatar,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Link,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 
 import { Manifest } from "../../../slices/warframe/types/export/ExportManifest";
@@ -11,7 +24,7 @@ import { findRecipe, getImage, getWikiLink } from "../Utils";
 import WeaponIngredientList from "./WeaponIngredientList";
 
 interface WeaponCardProps {
-  weapon: ExportWeapon;
+  weapon: ExportWeapon | undefined;
 }
 
 const WeaponCard = ({ weapon }: WeaponCardProps) => {
@@ -46,8 +59,39 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
   return (
     <div>
       {weapon === undefined ? (
-        <CircularProgress />
+        // Skeleton loading card
+        <Card variant="outlined" sx={{ display: "flex", flexDirection: "column" }}>
+          <CardHeader
+            avatar={<Skeleton animation="wave" variant="circular" width={40} height={40} />}
+            title={<Skeleton animation="wave" height="1.25rem" width="100%" style={{ marginBottom: 6 }} />}
+            subheader={<Skeleton animation="wave" height="0.875rem" width="80%" style={{ marginBottom: 6 }} />}
+          />
+
+          <CardContent>
+            <List dense>
+              <Divider variant="middle" />
+
+              {Array.from(Array(3).keys()).map((i) => (
+                <>
+                  <ListItem key={i}>
+                    <ListItemAvatar>
+                      <Skeleton animation="wave" variant="circular" width={40} height={40} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={<Skeleton animation="wave" height="0.875rem" width="100%" style={{ marginBottom: 6 }} />}
+                      secondary={
+                        <Skeleton animation="wave" height="0.875rem" width="80%" style={{ marginBottom: 6 }} />
+                      }
+                    />
+                  </ListItem>
+                  <Divider variant="middle" />
+                </>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
       ) : (
+        // Actual card with content
         <Card variant="outlined" sx={{ display: "flex", flexDirection: "column" }}>
           <CardHeader
             avatar={<Avatar src={imageLocation} variant="rounded" />}

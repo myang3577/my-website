@@ -23,9 +23,7 @@ const Warframe = () => {
   const [completedWeapons, setCompletedWeapons] = useState<ExportWeapon[]>([]);
 
   useEffect(() => {
-    if (warframeExportStatus === LOADING_STATE.COMPLETE) {
-      return;
-    }
+    if (warframeExportStatus === LOADING_STATE.COMPLETE) return;
 
     dispatch(fetchExports());
   }, []);
