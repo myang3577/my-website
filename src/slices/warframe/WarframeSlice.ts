@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { findRecipe } from "../../components/warframe/RecipeUtils";
 import { LOADING_STATE } from "../../constants/Constants";
 import { RootState } from "../../store";
+import { Dict } from "../../types/Types";
 import { ExportCustomsEn } from "./types/export/ExportCustoms_en";
 import { ExportDronesEn } from "./types/export/ExportDrones_en";
 import { ExportFlavourEn } from "./types/export/ExportFlavour_en";
@@ -9,7 +11,7 @@ import { ExportFusionBundlesEn } from "./types/export/ExportFusionBundles_en";
 import { ExportGearEn } from "./types/export/ExportGear_en";
 import { ExportKeysEn } from "./types/export/ExportKeys_en";
 import { ExportManifest } from "./types/export/ExportManifest";
-import { ExportRecipesEn, Ingredient } from "./types/export/ExportRecipes_en";
+import { ExportRecipe, ExportRecipesEn } from "./types/export/ExportRecipes_en";
 import { ExportRegionsEn } from "./types/export/ExportRegions_en";
 import { ExportRelicArcaneEn } from "./types/export/ExportRelicArcane_en";
 import { ExportResourcesEn } from "./types/export/ExportResources_en";
@@ -17,7 +19,7 @@ import { ExportSentinelsEn } from "./types/export/ExportSentinels_en";
 import { ExportSortieRewardsEn } from "./types/export/ExportSortieRewards_en";
 import { ExportUpgradesEn } from "./types/export/ExportUpgrades_en";
 import { ExportWarframesEn } from "./types/export/ExportWarframes_en";
-import { ExportWeaponsEn } from "./types/export/ExportWeapons_en";
+import { ExportWeapon, ExportWeaponsEn } from "./types/export/ExportWeapons_en";
 import {
   EXPORT_CUSTOMS_EN,
   EXPORT_DRONES_EN,
@@ -46,7 +48,7 @@ const initialState: WarframeState = {
   value: 0,
   warframeExportStatus: LOADING_STATE.IDLE,
   warframeExports: getDefaultWarframeExport(),
-  uncompletedWeaponIngredientCount: {},
+  aggregateUncompletedWeaponIngredients: {},
 };
 
 /**
@@ -148,18 +150,35 @@ export const fetchExports = createAsyncThunk("warframe/fetchExports", async () =
   return exports;
 });
 
+export interface AggregateUncompletedWeaponIngredientsPayload {
+  weapons: ExportWeapon[];
+  recipes: ExportRecipe[];
+}
+
 export const warframeSlice = createSlice({
   name: "warframe",
   initialState,
   reducers: {
-    addUncompletedWeaponIngredients: (state: WarframeState, action: PayloadAction<Ingredient[]>) => {
-      action.payload.forEach((ingredient) => {
-        if (state.uncompletedWeaponIngredientCount[ingredient.ItemType] === undefined) {
-          state.uncompletedWeaponIngredientCount[ingredient.ItemType] = ingredient.ItemCount;
-        } else {
-          state.uncompletedWeaponIngredientCount[ingredient.ItemType] += ingredient.ItemCount;
-        }
-      });
+    aggregateUncompletedWeaponIngredients: (
+      state: WarframeState,
+      action: PayloadAction<AggregateUncompletedWeaponIngredientsPayload>
+    ) => {
+      const aggregatedIngredients = action.payload.weapons.reduce((acc, curr) => {
+        const recipe = findRecipe(curr.uniqueName, action.payload.recipes);
+        if (recipe === undefined) return acc;
+
+        recipe.ingredients.forEach((ingredient) => {
+          if (acc[ingredient.ItemType] === undefined) acc[ingredient.ItemType] = 0;
+
+          acc[ingredient.ItemType] += ingredient.ItemCount;
+        });
+
+        return acc;
+      }, {} as Dict);
+
+      state.aggregateUncompletedWeaponIngredients = aggregatedIngredients;
+
+      console.log(aggregatedIngredients);
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -179,11 +198,11 @@ export const warframeSlice = createSlice({
   },
 });
 
-export const { addUncompletedWeaponIngredients } = warframeSlice.actions;
+export const { aggregateUncompletedWeaponIngredients } = warframeSlice.actions;
 
 export const selectWarframeExportStatus = (state: RootState) => state.warframe.warframeExportStatus;
 export const selectWarframeExports = (state: RootState) => state.warframe.warframeExports;
-export const selectUncompletedWeaponIngredientCount = (state: RootState) =>
-  state.warframe.uncompletedWeaponIngredientCount;
+export const selectAggregateUncompletedWeaponIngredients = (state: RootState) =>
+  state.warframe.aggregateUncompletedWeaponIngredients;
 
 export default warframeSlice.reducer;

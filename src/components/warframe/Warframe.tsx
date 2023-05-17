@@ -3,8 +3,13 @@ import { useEffect, useState } from "react";
 
 import { LOADING_STATE } from "../../constants/Constants";
 import { ExportWeapon } from "../../slices/warframe/types/export/ExportWeapons_en";
-import { EXPORT_WEAPONS_EN } from "../../slices/warframe/types/WarframeState";
-import { fetchExports, selectWarframeExports, selectWarframeExportStatus } from "../../slices/warframe/WarframeSlice";
+import { EXPORT_RECIPES_EN, EXPORT_WEAPONS_EN } from "../../slices/warframe/types/WarframeState";
+import {
+  aggregateUncompletedWeaponIngredients,
+  fetchExports,
+  selectWarframeExports,
+  selectWarframeExportStatus,
+} from "../../slices/warframe/WarframeSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { withIdField } from "../../utils/Utils";
 import { MASTERY_COMPLETED } from "./MasteryCompletedList";
@@ -20,7 +25,7 @@ const Warframe = () => {
   const warframeExports = useAppSelector(selectWarframeExports);
 
   const [uncompletedWeapons, setUncompletedWeapons] = useState<ExportWeapon[]>([]);
-  const [completedWeapons, setCompletedWeapons] = useState<ExportWeapon[]>([]);
+  // const [completedWeapons, setCompletedWeapons] = useState<ExportWeapon[]>([]);
 
   useEffect(() => {
     if (warframeExportStatus === LOADING_STATE.COMPLETE) return;
@@ -29,25 +34,27 @@ const Warframe = () => {
   }, []);
 
   useEffect(() => {
-    const EXPORT_WEAPONS = "ExportWeapons";
+    if (warframeExportStatus != LOADING_STATE.COMPLETE) return;
 
-    if (!(EXPORT_WEAPONS_EN in warframeExports && EXPORT_WEAPONS in warframeExports[EXPORT_WEAPONS_EN])) {
-      return;
-    }
+    const exportWeaponsData = warframeExports[EXPORT_WEAPONS_EN].ExportWeapons;
 
-    const exportWeaponsObject = warframeExports[EXPORT_WEAPONS_EN];
-    const exportWeaponsData = exportWeaponsObject.ExportWeapons;
-
-    const uncompletedWeaponsData = exportWeaponsData.filter(
+    const uncompletedWeaponsData: ExportWeapon[] = exportWeaponsData.filter(
       (weapon: ExportWeapon) => !MASTERY_COMPLETED.includes(weapon.name)
     );
-    const completedWeaponsData = exportWeaponsData.filter((weapon: ExportWeapon) =>
-      MASTERY_COMPLETED.includes(weapon.name)
-    );
+    // const completedWeaponsData: ExportWeapon[] = exportWeaponsData.filter((weapon: ExportWeapon) =>
+    //   MASTERY_COMPLETED.includes(weapon.name)
+    // );
 
     setUncompletedWeapons(withIdField(uncompletedWeaponsData));
-    setCompletedWeapons(withIdField(completedWeaponsData));
-  }, [warframeExports]);
+    // setCompletedWeapons(withIdField(completedWeaponsData));
+
+    dispatch(
+      aggregateUncompletedWeaponIngredients({
+        weapons: uncompletedWeaponsData,
+        recipes: warframeExports[EXPORT_RECIPES_EN].ExportRecipes,
+      })
+    );
+  }, [warframeExportStatus]);
 
   return (
     <Paper>
@@ -63,12 +70,12 @@ const Warframe = () => {
           </Paper>
         </Grid>
 
-        <Grid xs={2}>
+        {/* <Grid xs={2}>
           <Paper sx={{ p: `${GRID_SPACING_SIZE * GRID_SPACING_VALUE}px` }}>
             <Typography variant="h6">Completed Weapons</Typography>
             <WeaponCardGrid weapons={completedWeapons} />
           </Paper>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Paper>
   );

@@ -20,7 +20,8 @@ import { ExportWeapon } from "../../../slices/warframe/types/export/ExportWeapon
 import { EXPORT_MANIFEST, EXPORT_RECIPES_EN } from "../../../slices/warframe/types/WarframeState";
 import { selectWarframeExports } from "../../../slices/warframe/WarframeSlice";
 import { useAppSelector } from "../../../store";
-import { findRecipe, getImage, getWikiLink } from "../Utils";
+import { findRecipe } from "../RecipeUtils";
+import { getImage, getWikiLink } from "../Utils";
 import WeaponIngredientList from "./WeaponIngredientList";
 
 interface WeaponCardProps {
@@ -52,7 +53,6 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
 
     if (weaponRecipe !== undefined) {
       setIngredients(weaponRecipe.ingredients);
-      // dispatch(addUncompletedWeaponIngredients(weaponRecipe.ingredients));
     }
   }, [exportRecipes, weapon]);
 
@@ -72,8 +72,8 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
               <Divider variant="middle" />
 
               {Array.from(Array(3).keys()).map((i) => (
-                <>
-                  <ListItem key={i}>
+                <div key={i}>
+                  <ListItem>
                     <ListItemAvatar>
                       <Skeleton animation="wave" variant="circular" width={40} height={40} />
                     </ListItemAvatar>
@@ -85,7 +85,7 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
                     />
                   </ListItem>
                   <Divider variant="middle" />
-                </>
+                </div>
               ))}
             </List>
           </CardContent>

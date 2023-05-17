@@ -7,7 +7,7 @@ import { EXPORT_RECIPES_EN } from "../../../slices/warframe/types/WarframeState"
 import { selectWarframeExports } from "../../../slices/warframe/WarframeSlice";
 import { useAppSelector } from "../../../store";
 import ExpandMore from "../../common/ExpandMore";
-import { findRecipe, hasRecipe } from "../Utils";
+import { findRecipe, hasRecipe } from "../RecipeUtils";
 import WeaponIngredientListItem from "./WeaponIngredientListItem";
 
 interface WeaponIngredientListProps {

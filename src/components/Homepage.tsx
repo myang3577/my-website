@@ -21,10 +21,10 @@ const TABS: TabDef[] = [
     label: "Warframe",
     path: "warframe",
   },
-  {
-    label: "Path of Exile",
-    path: "pathofexile",
-  },
+  // {
+  //   label: "Path of Exile",
+  //   path: "pathofexile",
+  // },
 ];
 
 const Homepage = ({ toggleColorMode, theme }: HomepageProps) => {
