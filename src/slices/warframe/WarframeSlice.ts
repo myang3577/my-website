@@ -48,7 +48,7 @@ const initialState: WarframeState = {
   value: 0,
   warframeExportStatus: LOADING_STATE.IDLE,
   warframeExports: getDefaultWarframeExport(),
-  aggregateUncompletedWeaponIngredients: {},
+  aggregateUncompletedWeaponIngredients: [],
 };
 
 /**
@@ -150,10 +150,24 @@ export const fetchExports = createAsyncThunk("warframe/fetchExports", async () =
   return exports;
 });
 
-export interface AggregateUncompletedWeaponIngredientsPayload {
+export interface AggregateWeaponIngredients {
   weapons: ExportWeapon[];
   recipes: ExportRecipe[];
 }
+
+export const aggregateWeaponIngredients = ({ weapons, recipes }: AggregateWeaponIngredients): Dict =>
+  weapons.reduce((acc, curr) => {
+    const recipe = findRecipe(curr.uniqueName, recipes);
+    if (recipe === undefined) return acc;
+
+    recipe.ingredients.forEach((ingredient) => {
+      if (acc[ingredient.ItemType] === undefined) acc[ingredient.ItemType] = 0;
+
+      acc[ingredient.ItemType] += ingredient.ItemCount;
+    });
+
+    return acc;
+  }, {} as Dict);
 
 export const warframeSlice = createSlice({
   name: "warframe",
@@ -161,24 +175,19 @@ export const warframeSlice = createSlice({
   reducers: {
     aggregateUncompletedWeaponIngredients: (
       state: WarframeState,
-      action: PayloadAction<AggregateUncompletedWeaponIngredientsPayload>
+      action: PayloadAction<AggregateWeaponIngredients>
     ) => {
-      const aggregatedIngredients = action.payload.weapons.reduce((acc, curr) => {
-        const recipe = findRecipe(curr.uniqueName, action.payload.recipes);
-        if (recipe === undefined) return acc;
+      const aggregatedIngredients = aggregateWeaponIngredients(action.payload);
 
-        recipe.ingredients.forEach((ingredient) => {
-          if (acc[ingredient.ItemType] === undefined) acc[ingredient.ItemType] = 0;
+      state.aggregateUncompletedWeaponIngredients = Object.entries(aggregatedIngredients).map(
+        ([ingredient, count]) => ({
+          ingredient: ingredient,
+          ingredientDisplayName: ingredient.split("/").pop(),
+          count: count,
+        })
+      );
 
-          acc[ingredient.ItemType] += ingredient.ItemCount;
-        });
-
-        return acc;
-      }, {} as Dict);
-
-      state.aggregateUncompletedWeaponIngredients = aggregatedIngredients;
-
-      console.log(aggregatedIngredients);
+      console.log(state.aggregateUncompletedWeaponIngredients);
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,

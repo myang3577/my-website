@@ -9,6 +9,7 @@ export const fetchCorsProxy = (url: RequestInfo | URL, init?: RequestInit) => {
 
 /**
  * Helper to add an `id` field to each object of the list to use as data for the MUI DataGrid object.
+ *
  * @param list
  */
 export const withIdField = <T>(list: T[]): T[] => {

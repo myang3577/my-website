@@ -1,5 +1,4 @@
 import { LOADING_STATE } from "../../../constants/Constants";
-import { Dict } from "../../../types/Types";
 import { ExportCustomsEn } from "./export/ExportCustoms_en";
 import { ExportDronesEn } from "./export/ExportDrones_en";
 import { ExportFlavourEn } from "./export/ExportFlavour_en";
@@ -58,11 +57,15 @@ export interface IngredientCount {
   count: number;
 }
 
+export interface AggregatedIngredientCount extends IngredientCount {
+  ingredientDisplayName: string;
+}
+
 export interface WarframeState {
   value: number;
   warframeExportStatus: LOADING_STATE;
   warframeExports: WarframeExports;
-  aggregateUncompletedWeaponIngredients: Dict;
+  aggregateUncompletedWeaponIngredients: IngredientCount[];
 }
 
 export const getDefaultWarframeExport = (): WarframeExports =>

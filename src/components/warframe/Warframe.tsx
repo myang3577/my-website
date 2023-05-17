@@ -1,4 +1,5 @@
 import { Paper, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
 import { LOADING_STATE } from "../../constants/Constants";
@@ -7,6 +8,7 @@ import { EXPORT_RECIPES_EN, EXPORT_WEAPONS_EN } from "../../slices/warframe/type
 import {
   aggregateUncompletedWeaponIngredients,
   fetchExports,
+  selectAggregateUncompletedWeaponIngredients,
   selectWarframeExports,
   selectWarframeExportStatus,
 } from "../../slices/warframe/WarframeSlice";
@@ -23,9 +25,15 @@ const Warframe = () => {
 
   const warframeExportStatus = useAppSelector(selectWarframeExportStatus);
   const warframeExports = useAppSelector(selectWarframeExports);
+  const aggregateUncompletedWeaponIngredientsData = useAppSelector(selectAggregateUncompletedWeaponIngredients);
 
   const [uncompletedWeapons, setUncompletedWeapons] = useState<ExportWeapon[]>([]);
   // const [completedWeapons, setCompletedWeapons] = useState<ExportWeapon[]>([]);
+
+  const columns: GridColDef[] = [
+    { field: "ingredientDisplayName", headerName: "Ingredient", minWidth: 500 },
+    { field: "count", headerName: "Count", type: "number", minWidth: 200 },
+  ];
 
   useEffect(() => {
     if (warframeExportStatus === LOADING_STATE.COMPLETE) return;
@@ -67,6 +75,24 @@ const Warframe = () => {
           <Paper sx={{ p: `${GRID_SPACING_SIZE * GRID_SPACING_VALUE}px` }}>
             <Typography variant="h6">Uncompleted Weapons</Typography>
             <WeaponCardGrid weapons={uncompletedWeapons} />
+          </Paper>
+        </Grid>
+
+        <Grid xs={2}>
+          <Paper sx={{ p: "10px" }}>
+            <Typography variant="h4" marginBottom={1}>
+              Uncompleted Weapons Aggregated Ingredients
+            </Typography>
+            <DataGrid
+              rows={withIdField(aggregateUncompletedWeaponIngredientsData)}
+              columns={columns}
+              checkboxSelection
+              autoHeight
+              loading={warframeExportStatus === LOADING_STATE.LOADING}
+              initialState={{
+                sorting: { sortModel: [{ field: "count", sort: "desc" }] },
+              }}
+            />
           </Paper>
         </Grid>
 
