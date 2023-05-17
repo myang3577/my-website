@@ -15,10 +15,6 @@ const ITEMS = ROWS * MAX_COL_SIZE;
 const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
   const [page, setPage] = useState<number>(1);
 
-  useEffect(() => {
-    console.log(weapons);
-  }, [weapons]);
-
   return (
     <>
       <Stack alignItems={"center"}>

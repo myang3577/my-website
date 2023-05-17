@@ -186,8 +186,6 @@ export const warframeSlice = createSlice({
           count: count,
         })
       );
-
-      console.log(state.aggregateUncompletedWeaponIngredients);
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
