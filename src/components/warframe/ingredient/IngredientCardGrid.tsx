@@ -1,25 +1,25 @@
 import { Grid, Pagination, Stack, Zoom } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 
-import { ExportWeapon } from "../../../slices/warframe/types/export/ExportWeapons_en";
-import WeaponCard from "./WeaponCard";
+import { AggregatedIngredientCount } from "../../../slices/warframe/types/WarframeState";
+import IngredientCard from "./IngredientCard";
 
-interface WeaponGridCardProps {
-  weapons: ExportWeapon[];
+interface IngredientCardGridProps {
+  aggregatedIngredients: AggregatedIngredientCount[];
 }
 
 const MAX_COL_SIZE = 6;
 const ROWS = 3;
 const ITEMS = ROWS * MAX_COL_SIZE;
 
-const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
+const IngredientCardGrid = ({ aggregatedIngredients }: IngredientCardGridProps) => {
   const [page, setPage] = useState<number>(1);
 
   return (
     <>
       <Stack alignItems={"center"}>
         <Pagination
-          count={Math.ceil(weapons.length / ITEMS)}
+          count={Math.ceil(aggregatedIngredients.length / ITEMS)}
           variant="outlined"
           shape="rounded"
           color="primary"
@@ -30,15 +30,15 @@ const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
       </Stack>
 
       <Grid container spacing={0.5} columns={{ xs: 1, sm: 3, md: MAX_COL_SIZE }}>
-        {weapons.length === 0 ? (
+        {aggregatedIngredients.length === 0 ? (
           Array.from(Array(MAX_COL_SIZE).keys()).map((i) => (
             <Grid item xs={1} key={i}>
-              <WeaponCard weapon={undefined} />
+              <IngredientCard aggregatedIngredient={undefined} />
             </Grid>
           ))
         ) : (
           <>
-            {weapons.slice(ITEMS * (page - 1), ITEMS * page).map((weapon, i) => (
+            {aggregatedIngredients.slice(ITEMS * (page - 1), ITEMS * page).map((aggregatedIngredient, i) => (
               <Zoom
                 in={true}
                 timeout={1000}
@@ -49,7 +49,7 @@ const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
                 key={i}
               >
                 <Grid item xs={1}>
-                  <WeaponCard weapon={weapon} />
+                  <IngredientCard aggregatedIngredient={aggregatedIngredient} />
                 </Grid>
               </Zoom>
             ))}
@@ -60,4 +60,4 @@ const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
   );
 };
 
-export default WeaponCardGrid;
+export default IngredientCardGrid;

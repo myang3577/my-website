@@ -21,6 +21,7 @@ import { ExportUpgradesEn } from "./types/export/ExportUpgrades_en";
 import { ExportWarframesEn } from "./types/export/ExportWarframes_en";
 import { ExportWeapon, ExportWeaponsEn } from "./types/export/ExportWeapons_en";
 import {
+  AggregatedIngredientCount,
   EXPORT_CUSTOMS_EN,
   EXPORT_DRONES_EN,
   EXPORT_FLAVOUR_EN,
@@ -180,9 +181,9 @@ export const warframeSlice = createSlice({
       const aggregatedIngredients = aggregateWeaponIngredients(action.payload);
 
       state.aggregateUncompletedWeaponIngredients = Object.entries(aggregatedIngredients).map(
-        ([ingredient, count]) => ({
+        ([ingredient, count]): AggregatedIngredientCount => ({
           ingredient: ingredient,
-          ingredientDisplayName: ingredient.split("/").pop(),
+          ingredientDisplayName: ingredient.split("/").pop() || ingredient,
           count: count,
         })
       );

@@ -65,7 +65,7 @@ export interface WarframeState {
   value: number;
   warframeExportStatus: LOADING_STATE;
   warframeExports: WarframeExports;
-  aggregateUncompletedWeaponIngredients: IngredientCount[];
+  aggregateUncompletedWeaponIngredients: AggregatedIngredientCount[];
 }
 
 export const getDefaultWarframeExport = (): WarframeExports =>
