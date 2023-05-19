@@ -9,7 +9,7 @@ interface IngredientCardGridProps {
 }
 
 const MAX_COL_SIZE = 6;
-const ROWS = 3;
+const ROWS = 6;
 const ITEMS = ROWS * MAX_COL_SIZE;
 
 const IngredientCardGrid = ({ aggregatedIngredients }: IngredientCardGridProps) => {
