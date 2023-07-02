@@ -7,6 +7,8 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import { BlobSvg } from "./blob/BlobSvg";
 import Homepage from "./Homepage";
+import PathOfExile from "./pathofexile/PathOfExile";
+import TeamfightTactics from "./teamfighttactics/TeamfightTactics";
 import Warframe from "./warframe/Warframe";
 
 const App = () => {
@@ -63,10 +65,14 @@ const App = () => {
           path: "/warframe",
           element: <Warframe />,
         },
-        // {
-        //   path: "/pathofexile",
-        //   element: <PathOfExile />,
-        // },
+        {
+          path: "/pathofexile",
+          element: <PathOfExile />,
+        },
+        {
+          path: "/tft",
+          element: <TeamfightTactics />,
+        },
         {
           path: "/blob",
           element: <BlobSvg />,

@@ -25,6 +25,10 @@ const TABS: TabDef[] = [
   //   label: "Path of Exile",
   //   path: "pathofexile",
   // },
+  {
+    label: "TFT",
+    path: "tft",
+  },
 ];
 
 const Homepage = ({ toggleColorMode, theme }: HomepageProps) => {
