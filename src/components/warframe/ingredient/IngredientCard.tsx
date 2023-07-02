@@ -19,9 +19,14 @@ import { selectWarframeExports } from "../../../slices/warframe/WarframeSlice";
 import { useAppSelector } from "../../../store";
 import { getImage, getWikiLink } from "../Utils";
 
+const splitAtCapital = (str: string) => {
+  return str.replace(/([A-Z])/g, " $1").trim();
+};
+
 interface IngredientCardProps {
   aggregatedIngredient: AggregatedIngredientCount | undefined;
 }
+
 const IngredientCard = ({ aggregatedIngredient }: IngredientCardProps) => {
   const warframeExports = useAppSelector(selectWarframeExports);
   const { ingredient, count, ingredientDisplayName } = aggregatedIngredient || { ingredient: undefined };
@@ -74,8 +79,8 @@ const IngredientCard = ({ aggregatedIngredient }: IngredientCardProps) => {
         <Card variant="outlined" sx={{ display: "flex", flexDirection: "row" }}>
           <CardMedia component="img" sx={{ width: "auto", height: "50px", margin: "auto" }} src={imageLocation} />
           <CardContent sx={{ flex: "1 0 auto" }}>
-            <Link href={getWikiLink(ingredientDisplayName)} underline="hover" target="_blank">
-              <Typography variant="h6">{ingredientDisplayName}</Typography>
+            <Link href={getWikiLink(splitAtCapital(ingredientDisplayName))} underline="hover" target="_blank">
+              <Typography variant="h6">{splitAtCapital(ingredientDisplayName)}</Typography>
             </Link>
             <Typography>{count}</Typography>
           </CardContent>
