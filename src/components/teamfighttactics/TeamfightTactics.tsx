@@ -20,7 +20,22 @@ const teamfightTactics = () => {
   const [parsedTftMetasrcData, setParsedTftMetasrcData] = useState<TftMetasrc[]>([]);
   const [filteredTftMetasrcData, setFilteredTftMetasrcData] = useState<TftMetasrc[]>([]);
 
-  const sortByTier = (a: TftMetasrc, b: TftMetasrc) => -a.tier.localeCompare(b.tier);
+  /**
+   * Sorts the augments by tier. Tier order: S+, S, A, B, C, D.
+   */
+  const S_TIERS = ["S+", "S"];
+  const sortByTier = (a: TftMetasrc, b: TftMetasrc) => {
+    if (a.tier === b.tier) return a.name.localeCompare(b.name);
+
+    if (S_TIERS.includes(a.tier) && S_TIERS.includes(b.tier)) {
+      return S_TIERS.indexOf(a.tier) - S_TIERS.indexOf(b.tier);
+    }
+
+    if (S_TIERS.includes(a.tier)) return -1;
+    if (S_TIERS.includes(b.tier)) return 1;
+
+    return a.tier.localeCompare(b.tier);
+  };
 
   useEffect(() => {
     if (tftMetasrcDataStatus === LOADING_STATE.COMPLETE) return;
