@@ -1,6 +1,6 @@
 import { CircularProgress, Paper, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import Fuse from "fuse.js";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { LOADING_STATE } from "../../constants/Constants";
 import {
@@ -19,6 +19,8 @@ const teamfightTactics = () => {
 
   const [parsedTftMetasrcData, setParsedTftMetasrcData] = useState<TftMetasrc[]>([]);
   const [filteredTftMetasrcData, setFilteredTftMetasrcData] = useState<TftMetasrc[]>([]);
+
+  const sortByTier = (a: TftMetasrc, b: TftMetasrc) => -a.tier.localeCompare(b.tier);
 
   useEffect(() => {
     if (tftMetasrcDataStatus === LOADING_STATE.COMPLETE) return;
@@ -40,22 +42,25 @@ const teamfightTactics = () => {
         image: data.image.match(/data-src="(.*?)"/)?.[1] ?? "Image not found.",
       }))
       // Sort by tier.
-      .sort((a, b) => -a.tier.localeCompare(b.tier));
+      .sort(sortByTier);
 
     setParsedTftMetasrcData(parsedData);
   }, [tftMetasrcDataStatus]);
 
   const [filterQuery, setFuzzySearchQuery] = useState("");
+  const getFuse = useMemo(() => {
+    return new Fuse(parsedTftMetasrcData, {
+      includeScore: true,
+      useExtendedSearch: true,
+      keys: ["name"],
+      threshold: 0.3,
+    });
+  }, [parsedTftMetasrcData]);
   useEffect(() => {
-    const fuse = new Fuse(
-      parsedTftMetasrcData.map((data) => data.name),
-      {
-        includeScore: true,
-      }
-    );
+    const fuse = getFuse;
     const results = fuse.search(filterQuery).map((result) => result.item);
-
-    setFilteredTftMetasrcData(parsedTftMetasrcData.filter((data) => results.includes(data.name)));
+    const sortedResults = results.sort(sortByTier);
+    setFilteredTftMetasrcData(sortedResults);
   }, [filterQuery]);
 
   return (
