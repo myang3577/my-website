@@ -10,6 +10,11 @@ import {
 } from "../../slices/teamfighttactics/TeamfightTacticsSlice";
 import { Category, TftMetasrc } from "../../slices/teamfighttactics/types/TftMetasrc";
 import { useAppDispatch, useAppSelector } from "../../store";
+import { AugmentCard } from "./augments/AugmentCard";
+import { AugmentCardGrid } from "./augments/AugmentCardGrid";
+
+const GRID_SPACING_SIZE = 4;
+const GRID_SPACING_VALUE = 2;
 
 const teamfightTactics = () => {
   const dispatch = useAppDispatch();
@@ -65,6 +70,7 @@ const teamfightTactics = () => {
 
     setAugmentTiers(tiers);
     setParsedTftMetasrcData(parsedData);
+    console.log(parsedData[0]);
   }, [tftMetasrcDataStatus]);
 
   const [augmentFilter, setAugmentFilter] = useState("");
@@ -85,34 +91,42 @@ const teamfightTactics = () => {
     setFilteredTftMetasrcData(sortedResults);
   }, [augmentFilter]);
 
+  const getAugmentsForTier = (tier: string) =>
+    (filteredTftMetasrcData.length === 0 ? parsedTftMetasrcData : filteredTftMetasrcData).filter(
+      (data) => data.tier === tier
+    );
+
   return (
     <Paper>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={augmentFilter}
-        onChange={(e) => setAugmentFilter(e.target.value)}
-      />
-      {(parsedTftMetasrcData.length === 0 && filteredTftMetasrcData.length === 0) || augmentTiers.length === 0 ? (
-        <CircularProgress />
-      ) : (
-        <div>
-          {augmentTiers.map((tier, i) => (
-            <div key={i}>
-              <Typography key={i}>{tier}</Typography>
+      <Grid container spacing={GRID_SPACING_VALUE} columns={2} sx={{ width: "100%", margin: "auto" }}>
+        <Grid xs={2}>
+          <Typography variant="h4">TFT Augments</Typography>
+        </Grid>
 
-              {(filteredTftMetasrcData.length === 0 ? parsedTftMetasrcData : filteredTftMetasrcData)
-                .filter((data) => data.tier === tier)
-                .map((data, i) => (
-                  <div key={i}>
-                    {data.name} | Tier: {data.tier}
-                    <img src={data.image} alt={data.name} width="100" height="100" />
-                  </div>
-                ))}
-            </div>
-          ))}
-        </div>
-      )}
+        <Grid xs={2}>
+          <Paper sx={{ p: `${GRID_SPACING_SIZE * GRID_SPACING_VALUE}px` }}>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={augmentFilter}
+              onChange={(e) => setAugmentFilter(e.target.value)}
+            />
+          </Paper>
+        </Grid>
+
+        {augmentTiers.map((tier, i) => {
+          return (
+            getAugmentsForTier(tier).length > 0 && (
+              <Grid xs={2} key={i}>
+                <Paper sx={{ p: `${GRID_SPACING_SIZE * GRID_SPACING_VALUE}px` }}>
+                  <Typography variant="h6">{tier}</Typography>
+                  <AugmentCardGrid augments={getAugmentsForTier(tier)} />
+                </Paper>
+              </Grid>
+            )
+          );
+        })}
+      </Grid>
     </Paper>
   );
 };
