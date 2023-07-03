@@ -62,7 +62,7 @@ const teamfightTactics = () => {
     setParsedTftMetasrcData(parsedData);
   }, [tftMetasrcDataStatus]);
 
-  const [filterQuery, setFuzzySearchQuery] = useState("");
+  const [augmentFilter, setAugmentFilter] = useState("");
   const getFuse = useMemo(() => {
     return new Fuse(parsedTftMetasrcData, {
       includeScore: true,
@@ -73,18 +73,20 @@ const teamfightTactics = () => {
   }, [parsedTftMetasrcData]);
   useEffect(() => {
     const fuse = getFuse;
-    const results = fuse.search(filterQuery).map((result) => result.item);
+
+    const filter = augmentFilter.replace(",", "|");
+    const results = fuse.search(filter).map((result) => result.item);
     const sortedResults = results.sort(sortByTier);
     setFilteredTftMetasrcData(sortedResults);
-  }, [filterQuery]);
+  }, [augmentFilter]);
 
   return (
     <Paper>
       <input
         type="text"
         placeholder="Search..."
-        value={filterQuery}
-        onChange={(e) => setFuzzySearchQuery(e.target.value)}
+        value={augmentFilter}
+        onChange={(e) => setAugmentFilter(e.target.value)}
       />
       {parsedTftMetasrcData.length === 0 && filteredTftMetasrcData.length === 0 ? (
         <CircularProgress />
