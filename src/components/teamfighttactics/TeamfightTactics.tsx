@@ -1,4 +1,5 @@
 import { CircularProgress, Paper, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
 
 import { LOADING_STATE } from "../../constants/Constants";
@@ -17,6 +18,7 @@ const teamfightTactics = () => {
   const tftMetasrcData = useAppSelector(selectTftMetasrcData);
 
   const [parsedTftMetasrcData, setParsedTftMetasrcData] = useState<TftMetasrc[]>([]);
+  const [filteredTftMetasrcData, setFilteredTftMetasrcData] = useState<TftMetasrc[]>([]);
 
   useEffect(() => {
     if (tftMetasrcDataStatus === LOADING_STATE.COMPLETE) return;
@@ -43,12 +45,31 @@ const teamfightTactics = () => {
     setParsedTftMetasrcData(parsedData);
   }, [tftMetasrcDataStatus]);
 
+  const [filterQuery, setFuzzySearchQuery] = useState("");
+  useEffect(() => {
+    const fuse = new Fuse(
+      parsedTftMetasrcData.map((data) => data.name),
+      {
+        includeScore: true,
+      }
+    );
+    const results = fuse.search(filterQuery).map((result) => result.item);
+
+    setFilteredTftMetasrcData(parsedTftMetasrcData.filter((data) => results.includes(data.name)));
+  }, [filterQuery]);
+
   return (
     <Paper>
-      {tftMetasrcDataStatus !== LOADING_STATE.COMPLETE ? (
+      <input
+        type="text"
+        placeholder="Search..."
+        value={filterQuery}
+        onChange={(e) => setFuzzySearchQuery(e.target.value)}
+      />
+      {parsedTftMetasrcData.length === 0 && filteredTftMetasrcData.length === 0 ? (
         <CircularProgress />
       ) : (
-        parsedTftMetasrcData.map((data, i) => (
+        (filteredTftMetasrcData.length === 0 ? parsedTftMetasrcData : filteredTftMetasrcData).map((data, i) => (
           <div key={i}>
             {data.name} | Tier: {data.tier}
             <img src={data.image} alt={data.name} width="100" height="100" />
