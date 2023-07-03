@@ -1,4 +1,4 @@
-import { CircularProgress, Paper, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { Paper, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import Fuse from "fuse.js";
 import { useEffect, useMemo, useState } from "react";
 
@@ -10,7 +10,6 @@ import {
 } from "../../slices/teamfighttactics/TeamfightTacticsSlice";
 import { Category, TftMetasrc } from "../../slices/teamfighttactics/types/TftMetasrc";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { AugmentCard } from "./augments/AugmentCard";
 import { AugmentCardGrid } from "./augments/AugmentCardGrid";
 
 const GRID_SPACING_SIZE = 4;
@@ -74,17 +73,17 @@ const teamfightTactics = () => {
   }, [tftMetasrcDataStatus]);
 
   const [augmentFilter, setAugmentFilter] = useState("");
-  const getFuse = useMemo(() => {
-    return new Fuse(parsedTftMetasrcData, {
-      includeScore: true,
-      useExtendedSearch: true,
-      keys: ["name"],
-      threshold: 0.3,
-    });
-  }, [parsedTftMetasrcData]);
+  const fuse = useMemo(
+    () =>
+      new Fuse(parsedTftMetasrcData, {
+        includeScore: true,
+        useExtendedSearch: true,
+        keys: ["name"],
+        threshold: 0.3,
+      }),
+    [parsedTftMetasrcData]
+  );
   useEffect(() => {
-    const fuse = getFuse;
-
     const filter = augmentFilter.replace(",", "|");
     const results = fuse.search(filter).map((result) => result.item);
     const sortedResults = results.sort(sortByTier);
@@ -119,7 +118,7 @@ const teamfightTactics = () => {
             getAugmentsForTier(tier).length > 0 && (
               <Grid xs={2} key={i}>
                 <Paper sx={{ p: `${GRID_SPACING_SIZE * GRID_SPACING_VALUE}px` }}>
-                  <Typography variant="h6">{tier}</Typography>
+                  <Typography variant="h6">{tier} Tier</Typography>
                   <AugmentCardGrid augments={getAugmentsForTier(tier)} />
                 </Paper>
               </Grid>

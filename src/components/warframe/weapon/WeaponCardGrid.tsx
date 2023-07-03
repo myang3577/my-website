@@ -29,7 +29,7 @@ const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
         />
       </Stack>
 
-      <Grid container spacing={0.5} columns={{ xs: 1, sm: 3, md: MAX_COL_SIZE }}>
+      <Grid container spacing={0.5} columns={{ xs: MAX_COL_SIZE / 4, sm: MAX_COL_SIZE / 2, md: MAX_COL_SIZE }}>
         {weapons.length === 0 ? (
           Array.from(Array(MAX_COL_SIZE).keys()).map((i) => (
             <Grid item xs={1} key={i}>
