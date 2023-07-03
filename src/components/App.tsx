@@ -6,12 +6,12 @@ import { useMemo, useState } from "react";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import { BlobSvg } from "./blob/BlobSvg";
-import Homepage from "./Homepage";
-import PathOfExile from "./pathofexile/PathOfExile";
-import TeamfightTactics from "./teamfighttactics/TeamfightTactics";
-import Warframe from "./warframe/Warframe";
+import { Homepage } from "./Homepage";
+import { PathOfExile } from "./pathofexile/PathOfExile";
+import { TeamfightTactics } from "./teamfighttactics/TeamfightTactics";
+import { Warframe } from "./warframe/Warframe";
 
-const App = () => {
+export const App = () => {
   const [mode, setMode] = useState<"light" | "dark">("dark");
   const colorMode = useMemo(
     () => ({
@@ -89,5 +89,3 @@ const App = () => {
     </ThemeProvider>
   );
 };
-
-export default App;

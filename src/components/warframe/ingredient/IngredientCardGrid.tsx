@@ -2,7 +2,7 @@ import { Grid, Pagination, Stack, Zoom } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 
 import { AggregatedIngredientCount } from "../../../slices/warframe/types/WarframeState";
-import IngredientCard from "./IngredientCard";
+import { IngredientCard } from "./IngredientCard";
 
 interface IngredientCardGridProps {
   aggregatedIngredients: AggregatedIngredientCount[];
@@ -12,7 +12,7 @@ const MAX_COL_SIZE = 6;
 const ROWS = 6;
 const ITEMS = ROWS * MAX_COL_SIZE;
 
-const IngredientCardGrid = ({ aggregatedIngredients }: IngredientCardGridProps) => {
+export const IngredientCardGrid = ({ aggregatedIngredients }: IngredientCardGridProps) => {
   const [page, setPage] = useState<number>(1);
 
   return (
@@ -59,5 +59,3 @@ const IngredientCardGrid = ({ aggregatedIngredients }: IngredientCardGridProps) 
     </>
   );
 };
-
-export default IngredientCardGrid;

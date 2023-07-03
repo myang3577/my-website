@@ -11,10 +11,11 @@
     "plugin:import/recommended",
     "plugin:import/typescript"
   ],
-  "plugins": ["simple-import-sort"],
+  "plugins": ["simple-import-sort", "import"],
   "rules": {
     "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "error",
+    "import/no-default-export": "error"
   },
   "parser": "@typescript-eslint/parser"
 }

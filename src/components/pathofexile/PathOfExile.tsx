@@ -14,7 +14,7 @@ import { PoeNinjaCurrencyResult } from "../../slices/pathofexile/types/PoeNinjaC
 import { useAppDispatch, useAppSelector } from "../../store";
 import { withIdField } from "../../utils/Utils";
 
-const PathOfExile = () => {
+export const PathOfExile = () => {
   const dispatch = useAppDispatch();
 
   const currencyStatus = useAppSelector(selectPathOfExileCurrencyStatus);
@@ -91,5 +91,3 @@ const PathOfExile = () => {
     </Paper>
   );
 };
-
-export default PathOfExile;

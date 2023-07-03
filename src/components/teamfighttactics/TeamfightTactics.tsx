@@ -15,7 +15,7 @@ import { AugmentCardGrid } from "./augments/AugmentCardGrid";
 const GRID_SPACING_SIZE = 4;
 const GRID_SPACING_VALUE = 2;
 
-const teamfightTactics = () => {
+export const TeamfightTactics = () => {
   const dispatch = useAppDispatch();
 
   const tftMetasrcDataStatus = useAppSelector(selectTftMetasrcDataStatus);
@@ -129,5 +129,3 @@ const teamfightTactics = () => {
     </Paper>
   );
 };
-
-export default teamfightTactics;

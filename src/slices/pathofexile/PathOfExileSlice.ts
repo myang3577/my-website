@@ -96,4 +96,4 @@ export const selectPathOfExileCurrencyStatus = (state: RootState) => state.pathO
 export const selectPathOfExileAveragePrice = (itemName: string) => (state: RootState) =>
   state.pathOfExile.averagePrices[itemName];
 
-export default pathOfExileSlice.reducer;
+export const pathOfExileReducer = pathOfExileSlice.reducer;

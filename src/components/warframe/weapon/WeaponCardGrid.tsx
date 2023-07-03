@@ -2,7 +2,7 @@ import { Grid, Pagination, Stack, Zoom } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 
 import { ExportWeapon } from "../../../slices/warframe/types/export/ExportWeapons_en";
-import WeaponCard from "./WeaponCard";
+import { WeaponCard } from "./WeaponCard";
 
 interface WeaponGridCardProps {
   weapons: ExportWeapon[];
@@ -12,7 +12,7 @@ const MAX_COL_SIZE = 6;
 const ROWS = 3;
 const ITEMS = ROWS * MAX_COL_SIZE;
 
-const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
+export const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
   const [page, setPage] = useState<number>(1);
 
   return (
@@ -59,5 +59,3 @@ const WeaponCardGrid = ({ weapons }: WeaponGridCardProps) => {
     </>
   );
 };
-
-export default WeaponCardGrid;

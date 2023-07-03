@@ -31,7 +31,7 @@ const TABS: TabDef[] = [
   },
 ];
 
-const Homepage = ({ toggleColorMode, theme }: HomepageProps) => {
+export const Homepage = ({ toggleColorMode, theme }: HomepageProps) => {
   return (
     <>
       <AppBar variant="outlined" elevation={0} position="sticky" enableColorOnDark>
@@ -65,5 +65,3 @@ const Homepage = ({ toggleColorMode, theme }: HomepageProps) => {
     </>
   );
 };
-
-export default Homepage;

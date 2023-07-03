@@ -17,14 +17,14 @@ import {
 } from "../../slices/warframe/WarframeSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { withIdField } from "../../utils/Utils";
-import IngredientCardGrid from "./ingredient/IngredientCardGrid";
+import { IngredientCardGrid } from "./ingredient/IngredientCardGrid";
 import { MASTERY_COMPLETED } from "./MasteryCompletedList";
-import WeaponCardGrid from "./weapon/WeaponCardGrid";
+import { WeaponCardGrid } from "./weapon/WeaponCardGrid";
 
 const GRID_SPACING_SIZE = 4;
 const GRID_SPACING_VALUE = 2;
 
-const Warframe = () => {
+export const Warframe = () => {
   const dispatch = useAppDispatch();
 
   const warframeExportStatus = useAppSelector(selectWarframeExportStatus);
@@ -86,5 +86,3 @@ const Warframe = () => {
     </Paper>
   );
 };
-
-export default Warframe;

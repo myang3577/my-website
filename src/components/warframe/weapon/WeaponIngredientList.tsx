@@ -6,15 +6,15 @@ import { Ingredient } from "../../../slices/warframe/types/export/ExportRecipes_
 import { EXPORT_RECIPES_EN } from "../../../slices/warframe/types/WarframeState";
 import { selectWarframeExports } from "../../../slices/warframe/WarframeSlice";
 import { useAppSelector } from "../../../store";
-import ExpandMore from "../../common/ExpandMore";
+import { ExpandMore } from "../../common/ExpandMore";
 import { findRecipe, hasRecipe } from "../RecipeUtils";
-import WeaponIngredientListItem from "./WeaponIngredientListItem";
+import { WeaponIngredientListItem } from "./WeaponIngredientListItem";
 
 interface WeaponIngredientListProps {
   ingredients: Ingredient[];
 }
 
-const WeaponIngredientList = ({ ingredients }: WeaponIngredientListProps) => {
+export const WeaponIngredientList = ({ ingredients }: WeaponIngredientListProps) => {
   const warframeExports = useAppSelector(selectWarframeExports);
 
   const exportRecipes = warframeExports[EXPORT_RECIPES_EN];
@@ -58,5 +58,3 @@ const WeaponIngredientList = ({ ingredients }: WeaponIngredientListProps) => {
     </List>
   );
 };
-
-export default WeaponIngredientList;

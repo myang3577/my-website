@@ -213,4 +213,4 @@ export const selectWarframeExports = (state: RootState) => state.warframe.warfra
 export const selectAggregateUncompletedWeaponIngredients = (state: RootState) =>
   state.warframe.aggregateUncompletedWeaponIngredients;
 
-export default warframeSlice.reducer;
+export const warframeReducer = warframeSlice.reducer;

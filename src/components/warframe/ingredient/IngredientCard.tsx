@@ -27,7 +27,7 @@ interface IngredientCardProps {
   aggregatedIngredient: AggregatedIngredientCount | undefined;
 }
 
-const IngredientCard = ({ aggregatedIngredient }: IngredientCardProps) => {
+export const IngredientCard = ({ aggregatedIngredient }: IngredientCardProps) => {
   const warframeExports = useAppSelector(selectWarframeExports);
   const { ingredient, count, ingredientDisplayName } = aggregatedIngredient || { ingredient: undefined };
 
@@ -89,5 +89,3 @@ const IngredientCard = ({ aggregatedIngredient }: IngredientCardProps) => {
     </div>
   );
 };
-
-export default IngredientCard;

@@ -46,4 +46,4 @@ export const teamfightTacticsSlice = createSlice({
 export const selectTftMetasrcDataStatus = (state: RootState) => state.teamfightTactics.tftMetasrcDataStatus;
 export const selectTftMetasrcData = (state: RootState) => state.teamfightTactics.tftMetasrcData;
 
-export default teamfightTacticsSlice.reducer;
+export const teamfightTacticsReducer = teamfightTacticsSlice.reducer;

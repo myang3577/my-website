@@ -11,7 +11,7 @@ interface WeaponIngredientListItemProps {
   children?: React.ReactNode;
 }
 
-const WeaponIngredientListItem = ({ ingredient, children }: WeaponIngredientListItemProps) => {
+export const WeaponIngredientListItem = ({ ingredient, children }: WeaponIngredientListItemProps) => {
   const warframeExports = useAppSelector(selectWarframeExports);
 
   const exportManifest = warframeExports[EXPORT_MANIFEST];
@@ -26,5 +26,3 @@ const WeaponIngredientListItem = ({ ingredient, children }: WeaponIngredientList
     </ListItem>
   );
 };
-
-export default WeaponIngredientListItem;

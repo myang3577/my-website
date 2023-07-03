@@ -22,13 +22,13 @@ import { selectWarframeExports } from "../../../slices/warframe/WarframeSlice";
 import { useAppSelector } from "../../../store";
 import { findRecipe } from "../RecipeUtils";
 import { getImage, getWikiLink } from "../Utils";
-import WeaponIngredientList from "./WeaponIngredientList";
+import { WeaponIngredientList } from "./WeaponIngredientList";
 
 interface WeaponCardProps {
   weapon: ExportWeapon | undefined;
 }
 
-const WeaponCard = ({ weapon }: WeaponCardProps) => {
+export const WeaponCard = ({ weapon }: WeaponCardProps) => {
   const warframeExports = useAppSelector(selectWarframeExports);
 
   // Handling image location
@@ -111,5 +111,3 @@ const WeaponCard = ({ weapon }: WeaponCardProps) => {
     </div>
   );
 };
-
-export default WeaponCard;
