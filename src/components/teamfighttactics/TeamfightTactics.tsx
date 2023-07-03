@@ -19,6 +19,7 @@ const teamfightTactics = () => {
 
   const [parsedTftMetasrcData, setParsedTftMetasrcData] = useState<TftMetasrc[]>([]);
   const [filteredTftMetasrcData, setFilteredTftMetasrcData] = useState<TftMetasrc[]>([]);
+  const [augmentTiers, setAugmentTiers] = useState<string[]>([]);
 
   /**
    * Sorts the augments by tier. Tier order: S+, S, A, B, C, D.
@@ -59,6 +60,10 @@ const teamfightTactics = () => {
       // Sort by tier.
       .sort(sortByTier);
 
+    // Get list of tiers, remove duplicates, and maintain order.
+    const tiers = parsedData.map((data) => data.tier).filter((tier, index, self) => self.indexOf(tier) === index);
+
+    setAugmentTiers(tiers);
     setParsedTftMetasrcData(parsedData);
   }, [tftMetasrcDataStatus]);
 
@@ -88,15 +93,25 @@ const teamfightTactics = () => {
         value={augmentFilter}
         onChange={(e) => setAugmentFilter(e.target.value)}
       />
-      {parsedTftMetasrcData.length === 0 && filteredTftMetasrcData.length === 0 ? (
+      {(parsedTftMetasrcData.length === 0 && filteredTftMetasrcData.length === 0) || augmentTiers.length === 0 ? (
         <CircularProgress />
       ) : (
-        (filteredTftMetasrcData.length === 0 ? parsedTftMetasrcData : filteredTftMetasrcData).map((data, i) => (
-          <div key={i}>
-            {data.name} | Tier: {data.tier}
-            <img src={data.image} alt={data.name} width="100" height="100" />
-          </div>
-        ))
+        <div>
+          {augmentTiers.map((tier, i) => (
+            <div key={i}>
+              <Typography key={i}>{tier}</Typography>
+
+              {(filteredTftMetasrcData.length === 0 ? parsedTftMetasrcData : filteredTftMetasrcData)
+                .filter((data) => data.tier === tier)
+                .map((data, i) => (
+                  <div key={i}>
+                    {data.name} | Tier: {data.tier}
+                    <img src={data.image} alt={data.name} width="100" height="100" />
+                  </div>
+                ))}
+            </div>
+          ))}
+        </div>
       )}
     </Paper>
   );
