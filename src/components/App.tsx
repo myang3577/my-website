@@ -83,7 +83,14 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Paper square variant="elevation" elevation={0}>
+      <Paper
+        square
+        variant="elevation"
+        elevation={0}
+        sx={{
+          minHeight: "100vh",
+        }}
+      >
         <RouterProvider router={router} />
       </Paper>
     </ThemeProvider>
