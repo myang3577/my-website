@@ -83,7 +83,7 @@ export const TeamfightTactics = () => {
     [parsedTftMetasrcData]
   );
   useEffect(() => {
-    const filter = augmentFilter.replace(",", "|");
+    const filter = augmentFilter.replaceAll(",", "|");
     const results = fuse.search(filter).map((result) => result.item);
     const sortedResults = results.sort(sortByTier);
     setFilteredTftMetasrcData(sortedResults);
