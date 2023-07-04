@@ -1,4 +1,4 @@
-import { Paper, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { Paper, TextField, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import Fuse from "fuse.js";
 import { useEffect, useMemo, useState } from "react";
 
@@ -69,7 +69,6 @@ export const TeamfightTactics = () => {
 
     setAugmentTiers(tiers);
     setParsedTftMetasrcData(parsedData);
-    console.log(parsedData[0]);
   }, [tftMetasrcDataStatus]);
 
   const [augmentFilter, setAugmentFilter] = useState("");
@@ -103,14 +102,13 @@ export const TeamfightTactics = () => {
         </Grid>
 
         <Grid xs={2}>
-          <Paper sx={{ p: `${GRID_SPACING_SIZE * GRID_SPACING_VALUE}px` }}>
-            <input
-              type="text"
-              placeholder="Search..."
-              value={augmentFilter}
-              onChange={(e) => setAugmentFilter(e.target.value)}
-            />
-          </Paper>
+          <TextField
+            id="outlined-basic"
+            label="Filter Augments"
+            variant="outlined"
+            onChange={(e) => setAugmentFilter(e.target.value)}
+            fullWidth
+          />
         </Grid>
 
         {augmentTiers.map((tier, i) => {
