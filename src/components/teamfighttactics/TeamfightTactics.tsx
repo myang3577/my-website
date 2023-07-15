@@ -1,7 +1,7 @@
 import { Close } from "@mui/icons-material";
 import { IconButton, InputAdornment, Paper, TextField, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import Fuse from "fuse.js";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { LOADING_STATE } from "../../constants/Constants";
 import {
@@ -95,6 +95,18 @@ export const TeamfightTactics = () => {
       (data) => data.tier === tier
     );
 
+  const augmentFilterInputRef = useRef<HTMLElement>();
+  const focusAugmentFilterInput = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.code === "Slash") augmentFilterInputRef.current?.focus();
+    },
+    [augmentFilterInputRef]
+  );
+  useEffect(() => {
+    document.addEventListener("keydown", focusAugmentFilterInput, true);
+    return () => document.removeEventListener("keydown", focusAugmentFilterInput, true);
+  }, [augmentFilter]);
+
   return (
     <Paper>
       <Grid container spacing={GRID_SPACING_VALUE} columns={2} sx={{ width: "100%", margin: "auto" }}>
@@ -107,9 +119,12 @@ export const TeamfightTactics = () => {
             id="outlined-basic"
             label="Filter Augments"
             variant="outlined"
-            onChange={(e) => setAugmentFilter(e.target.value)}
+            onChange={(e) => {
+              if (!e.target.value.includes("/")) setAugmentFilter(e.target.value);
+            }}
             value={augmentFilter}
             fullWidth
+            autoFocus
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -119,6 +134,7 @@ export const TeamfightTactics = () => {
                 </InputAdornment>
               ),
             }}
+            inputRef={augmentFilterInputRef}
           />
         </Grid>
 
