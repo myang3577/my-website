@@ -126,7 +126,7 @@ export const TeamfightTactics = () => {
             fullWidth
             autoFocus
             InputProps={{
-              endAdornment: (
+              endAdornment: augmentFilter !== "" && (
                 <InputAdornment position="end">
                   <IconButton onClick={() => setAugmentFilter("")}>
                     <Close />
