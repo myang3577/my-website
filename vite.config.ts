@@ -6,5 +6,5 @@ import eslint from "vite-plugin-eslint";
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
   plugins: [react(), eslint(), splitVendorChunkPlugin()],
-  base: "https://myang3577.github.io/my-website",
+  base: "/my-website/",
 });
