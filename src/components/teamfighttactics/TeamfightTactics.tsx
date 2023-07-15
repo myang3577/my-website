@@ -1,4 +1,5 @@
-import { Paper, TextField, Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { Close } from "@mui/icons-material";
+import { IconButton, InputAdornment, Paper, TextField, Typography, Unstable_Grid2 as Grid } from "@mui/material";
 import Fuse from "fuse.js";
 import { useEffect, useMemo, useState } from "react";
 
@@ -107,7 +108,17 @@ export const TeamfightTactics = () => {
             label="Filter Augments"
             variant="outlined"
             onChange={(e) => setAugmentFilter(e.target.value)}
+            value={augmentFilter}
             fullWidth
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setAugmentFilter("")}>
+                    <Close />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
 
