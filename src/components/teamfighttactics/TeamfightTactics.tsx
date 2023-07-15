@@ -99,6 +99,7 @@ export const TeamfightTactics = () => {
   const focusAugmentFilterInput = useCallback(
     (e: KeyboardEvent) => {
       if (e.code === "Slash") augmentFilterInputRef.current?.focus();
+      if (e.code === "Escape") setAugmentFilter("");
     },
     [augmentFilterInputRef]
   );
