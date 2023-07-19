@@ -129,7 +129,12 @@ export const TeamfightTactics = () => {
             InputProps={{
               endAdornment: augmentFilter !== "" && (
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setAugmentFilter("")}>
+                  <IconButton
+                    onClick={() => {
+                      setAugmentFilter("");
+                      augmentFilterInputRef.current?.focus();
+                    }}
+                  >
                     <Close />
                   </IconButton>
                 </InputAdornment>
