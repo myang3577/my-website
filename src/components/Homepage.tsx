@@ -25,10 +25,10 @@ const TABS: TabDef[] = [
   //   label: "Path of Exile",
   //   path: "pathofexile",
   // },
-  {
-    label: "TFT",
-    path: "tft",
-  },
+  // {
+  //   label: "TFT",
+  //   path: "tft",
+  // },
 ];
 
 export const Homepage = ({ toggleColorMode, theme }: HomepageProps) => {
