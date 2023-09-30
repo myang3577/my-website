@@ -56,22 +56,22 @@ const initialState: WarframeState = {
  * Manually fetched from: https://origin.warframe.com/PublicExport/index_en.txt.lzma.
  */
 const EXPORT_NAMES = [
-  "ExportCustoms_en.json!00_eMmfFW0cBmhMgKCVg4OrVQ",
+  "ExportCustoms_en.json!00_SPqSxjWv93Xgq5WkwowNIA",
   "ExportDrones_en.json!00_LZKVJWzyNlEXy-hI3mpGnA",
-  "ExportFlavour_en.json!00_ZncLtAPejPvNOCq-KayyhQ",
-  "ExportFusionBundles_en.json!00_mievusFTvE1yg4jxseyL9w",
-  "ExportGear_en.json!00_4dR4N93qX0d8hVBF3cFTGQ",
-  "ExportKeys_en.json!00_ejrRZxo69KE2kJ5H9RtfAA",
-  "ExportRecipes_en.json!00_PfGDS+9s51CjAENFDiIDeA",
-  "ExportRegions_en.json!00_LwDkCjVYlvTWc0LozQroaw",
-  "ExportRelicArcane_en.json!00_VOr3hNbwwZazos-HVr6+PQ",
-  "ExportResources_en.json!00_HLVPCm5NzBeShq-q8dh+hg",
+  "ExportFlavour_en.json!00_Z4ViEI-dP3GaVc7i2sqolw",
+  "ExportFusionBundles_en.json!00_yOD81zJOvs6qph81j6McIQ",
+  "ExportGear_en.json!00_OZxOL8ueB3pj6hrir-b-Jg",
+  "ExportKeys_en.json!00_kLJV+NLDW+IrHlJ+84oNlA",
+  "ExportRecipes_en.json!00_7ELirswPtkdOXIt-wDFuAQ",
+  "ExportRegions_en.json!00_-UkV06vcn1IH7mR3LimVTw",
+  "ExportRelicArcane_en.json!00_yBbOCHr1-2HJrBw32gS9UQ",
+  "ExportResources_en.json!00_ow7IxPLascfiD4aajQOZfA",
   "ExportSentinels_en.json!00_77HyQHJYXKRhQNFHDQDFlQ",
-  "ExportSortieRewards_en.json!00_vhEG53WKxus2ogHEGP3fWw",
-  "ExportUpgrades_en.json!00_4hLbuBsHeWHphpCSUnTy2Q",
-  "ExportWarframes_en.json!00_SEhDH31H5ZuNUsCMx19ttQ",
-  "ExportWeapons_en.json!00_x2GywzLibmHZggtRYQkeIw",
-  "ExportManifest.json!00_M1J0bDB945QmWfunK2Hiqw",
+  "ExportSortieRewards_en.json!00_LkhzO+-+wNQGMBXkq6lbnw",
+  "ExportUpgrades_en.json!00_NXXFkr378gmAwEsz6xfSYQ",
+  "ExportWarframes_en.json!00_hXtoIt9CYTTFM3-3R6EuyQ",
+  "ExportWeapons_en.json!00_tCESMW79EOWK-UCi4-VhvA",
+  "ExportManifest.json!00_GF0FMGMLuZPRFYPFVtr1EQ",
 ];
 
 /**
